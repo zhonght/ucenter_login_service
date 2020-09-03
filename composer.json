@@ -1,0 +1,34 @@
+{
+    "name": "zhonght/wj_scan_login",
+    "description": "微聚扫码登陆",
+    "type": "library",
+    "keywords": ["laravel-admin", "extension"],
+    "homepage": "https://github.com/zhonght/wj_scan_login",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "zhonght",
+            "email": "651799656@qq.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.0.0",
+        "encore/laravel-admin": "~1.6",
+        "simplesoftwareio/simple-qrcode":"1.3.*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Encore\\WJScanLogin\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Encore\\WJScanLogin\\WJScanLoginServiceProvider"
+            ]
+        }
+    }
+}

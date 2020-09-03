@@ -1,0 +1,105 @@
+.login-box-body{
+
+}
+.login-box-body, .register-box-body{
+    position: relative;
+}
+.login-box-msg, .register-box-msg{
+    text-align: left;
+    font-size: 16px;
+    padding: 0 20px 30px 0;
+}
+.form-group{
+
+}
+.scan-check{
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 60px;
+    width: 60px;
+    overflow: hidden;
+    background: url(../img/check.svg) no-repeat top right;
+    background-size: 100%;
+}
+.account-check{
+    position: absolute;
+    top: 0;
+    right:15px;
+    text-align: center;
+    height: 60px;
+    line-height: 60px;
+    overflow: hidden;
+    color: #576b95;
+}
+.login-check{
+    position: absolute;
+    top: 0;
+    right:15px;
+    text-align: center;
+    height: 60px;
+    line-height: 60px;
+    overflow: hidden;
+    color: #576b95;
+}
+.scan-mark{
+    width: 100%;
+    float: left;
+    position: relative;
+}
+.scan-password-btn{
+    margin-bottom: 30px;
+}
+
+.scan-qr-code{
+    width: 100%;
+    text-align: center;
+    overflow: hidden;
+    position: relative;
+}
+.scan-qr-code img{
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
+}
+#scan_login .scan-qr-code span,.id_scan_login .scan-qr-code span{
+    width: 100%;
+    float: left;
+    font-size: 12px;
+    margin: 30px auto;
+}
+#scan_verify .scan-qr-code span,.id_scan_verify .scan-qr-code span{
+    width: 100%;
+    float: left;
+    font-size: 12px;
+    margin:0 auto 30px auto;
+}
+#scan_verify .scan-qr-code img,.id_scan_verify .scan-qr-code img{
+    margin-bottom: 30px;
+}
+
+
+#scan_mark,#scan_verify_mark,.id_scan_mark,.id_scan_verify_mark{
+    position: absolute;
+    top: 0;
+    margin: 0 0 0 -75px;
+    left: 50%;
+    height: 150px;
+    width: 150px;
+    overflow: hidden;
+    background: url(../img/success.svg) no-repeat center center #fff;
+    background-size: 50%;
+    opacity: .95;
+}
+#scan_time_mark,#scan_verify_time_mark,.id_scan_time_mark,.id_scan_verify_time_mark{
+    position: absolute;
+    top: 0;
+    margin: 0 0 0 -75px;
+    left: 50%;
+    height: 150px;
+    width: 150px;
+    overflow: hidden;
+    background: url(../img/waitfor.png) no-repeat center center #fff;
+    background-size: 50%;
+    opacity: .95;
+}
