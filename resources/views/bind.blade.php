@@ -16,13 +16,9 @@
 <script>
     var qrCodeLoading = '{{$qrCodeLoading}}';
     var csrfToken = '{{$csrfToken}}';
-    $(function(){
-        $('td.column-scan_bind_code').each(function(){
-            if($(this).find('span:first').data('key') == '{{$key}}'){
-                $(this).find('span:first').click(function(){
-                    getLoginQrCode('{{$key}}');
-                });
-            }
-        });
-    });
 </script>
+<style>
+    td.column-scan_bind_code span.grid-expand i{
+        display: none;
+    }
+</style>

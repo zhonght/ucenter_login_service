@@ -58,7 +58,7 @@ class LoginController extends Controller
                     if ($this->guard()->loginUsingId($adminModel->id)) {
                         admin_toastr(trans('admin.login_successful'));
                         $request->session()->regenerate();
-                        return wj_ucenter_login_service_return('00', [$this->redirectPath()],'登陆成功');
+                        return wj_ucenter_login_service_return('00', [url($this->redirectPath())],'登陆成功');
                     }
                 }
             }
