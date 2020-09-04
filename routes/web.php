@@ -1,13 +1,18 @@
 <?php
 
-use Encore\WJScanLogin\Http\Controllers\AdminUserController;
+use \Encore\WJUcenterLoginService\Http\Controllers\Api\AdminController;
+use \Encore\WJUcenterLoginService\Http\Controllers\Admin\AdminUserController;
+use \Encore\WJUcenterLoginService\Http\Controllers\Admin\LoginController;
 
+
+// 后台的用户列表路由重置
 Route::get('auth/users', AdminUserController::class . '@index');
 
 
 // 重写登陆逻辑
-Route::get('auth/login',  \Encore\WJScanLogin\Http\Controllers\LoginController::class . '@getLogin');
-Route::post('auth/login',  \Encore\WJScanLogin\Http\Controllers\LoginController::class . '@postLogin');
+Route::get('auth/login',  LoginController::class . '@getLogin');
+Route::post('auth/login',  LoginController::class . '@postLogin');
+
 
 Route::group([
     'prefix' => 'api'
@@ -15,6 +20,6 @@ Route::group([
     $route->group([
         'prefix' => 'scan'
     ], function ($route) {
-        $route->post('get_bind', \Encore\WJScanLogin\Http\Controllers\ApiController::class . '@getBindCode');
+        $route->post('get_bind',AdminController::class . '@getBindCode');
     });
 });

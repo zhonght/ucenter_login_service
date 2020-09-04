@@ -1,8 +1,7 @@
 <?php
 
-namespace Encore\WJScanLogin\Render;
+namespace Encore\WJUcenterLoginService\Render;
 
-use Encore\WJScanLogin\Models\AdminScanLog;
 use Illuminate\Contracts\Support\Renderable;
 
 class BindCode implements Renderable
@@ -12,7 +11,7 @@ class BindCode implements Renderable
     {
         $userModel = config('admin.database.users_model');
         $adminUser = $userModel::query()->find($key);
-        return view('wj_scan_login::bind',compact('key','adminUser'));
+        return view('wj_ucenter_login_service::bind',compact('key','adminUser'));
     }
 
 }

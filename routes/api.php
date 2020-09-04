@@ -1,5 +1,7 @@
 <?php
 
+use \Encore\WJUcenterLoginService\Http\Controllers\Api\ApiController;
+use \Encore\WJUcenterLoginService\Http\Controllers\Api\AdminController;
 
 Route::group([
     'prefix' => 'api'
@@ -7,18 +9,17 @@ Route::group([
     $route->group([
         'prefix' => 'scan'
     ], function ($route) {
-        $route->any('status', \Encore\WJScanLogin\Http\Controllers\ApiController::class . '@status');
-        $route->any('bind', \Encore\WJScanLogin\Http\Controllers\ApiController::class . '@bind');
-        $route->any('login', \Encore\WJScanLogin\Http\Controllers\ApiController::class . '@login');
-        $route->any('auth', \Encore\WJScanLogin\Http\Controllers\ApiController::class . '@auth');
-        $route->any('users', \Encore\WJScanLogin\Http\Controllers\ApiController::class . '@users');
 
+        // 提供给用户服务的接口
+        $route->post('status', ApiController::class . '@status');
+        $route->post('bind', ApiController::class . '@bind');
+        $route->post('login', ApiController::class . '@login');
+        $route->post('auth', ApiController::class . '@auth');
+        $route->post('users',ApiController::class . '@users');
 
-
-
-
-        $route->post('get_login', \Encore\WJScanLogin\Http\Controllers\ApiController::class . '@getLoginCode');
-        $route->post('get_verify', \Encore\WJScanLogin\Http\Controllers\ApiController::class . '@getVerifyCode');
-        $route->post('code_status', \Encore\WJScanLogin\Http\Controllers\ApiController::class . '@getCodeStatus');
+        // 自身扫码的接口
+        $route->post('get_login',AdminController::class . '@getLoginCode');
+        $route->post('get_verify', AdminController::class . '@getVerifyCode');
+        $route->post('code_status', AdminController::class . '@getCodeStatus');
     });
 });

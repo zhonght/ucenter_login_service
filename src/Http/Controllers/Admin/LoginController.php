@@ -1,8 +1,8 @@
 <?php
 
-namespace Encore\WJScanLogin\Http\Controllers;
+namespace Encore\WJUcenterLoginService\Http\Controllers\Admin;
 
-use Encore\WJScanLogin\Models\AdminScanBind;
+use Encore\WJUcenterLoginService\Models\AdminScanBind;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -17,14 +17,13 @@ class LoginController extends Controller
         if ($this->guard()->check()) {
             return redirect($this->redirectPath());
         }
-        return view('wj_scan_login::index');
-
+        return view('wj_ucenter_login_service::index');
     }
 
     public function postLogin(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            $this->username() => 'required_without:admin_token',
+            'username' => 'required_without:admin_token',
             'password' => 'required_without:admin_token',
             'admin_token' => 'nullable'
         ]);
@@ -37,35 +36,31 @@ class LoginController extends Controller
                 return $this->sendLoginResponse($request);
             }
             return back()->withInput()->withErrors([
-                $this->username() => $this->getFailedLoginMessage(),
+                'username' => $this->getFailedLoginMessage(),
             ]);
         } else {
             if ($validator->fails()) {
-                return api_return('500', [], $validator->errors()->first());
+                return wj_ucenter_login_service_return('500', [], $validator->errors()->first());
             }
-            $credentials = $request->only([$this->username(), 'password']);
+            $credentials = $request->only(['username', 'password']);
             if ($this->guard()->validate($credentials)) {
                 $userModel = config('admin.database.users_model');
                 $adminModel = $userModel::query()->where('username', $request->username)->first();
-                return api_return('403', [
+                return wj_ucenter_login_service_return('403', [
                     'username' => $adminModel->username,
                     'name' => $adminModel->name,
                     'token' => encrypt(['type' => 'create_qr_code', 'id' => $adminModel->id, 'time' => time()]),
                     'is_verify' => AdminScanBind::where('admin_id', $adminModel->id)->count() > 0,
                 ]);
-
-
             }
-            return api_return('500', [], '账号密码错误');
+            return wj_ucenter_login_service_return('500', [], '账号密码错误');
         }
     }
 
     protected function sendLoginResponse(Request $request)
     {
         admin_toastr(trans('admin.login_successful'));
-
         $request->session()->regenerate();
-
         return redirect()->intended($this->redirectPath());
     }
 
@@ -82,14 +77,9 @@ class LoginController extends Controller
         if (method_exists($this, 'redirectTo')) {
             return $this->redirectTo();
         }
-
         return property_exists($this, 'redirectTo') ? $this->redirectTo : config('admin.route.prefix');
     }
 
-    protected function username()
-    {
-        return 'username';
-    }
 
     protected function guard()
     {

@@ -1,12 +1,12 @@
 <?php
 
-namespace Encore\WJScanLogin;
+namespace Encore\WJUcenterLoginService;
 
 use Encore\Admin\Extension;
 
-class WJScanLogin extends Extension
+class WJUcenterLoginService extends Extension
 {
-    public $name = 'wj_scan_login';
+    public $name = 'wj_ucenter_login_service';
 
     public $views = __DIR__.'/../resources/views';
 
@@ -14,7 +14,7 @@ class WJScanLogin extends Extension
 
     public $menu = [
         'title' => '扫码登陆',
-        'path'  => 'wj_scan_login',
+        'path'  => 'wj_ucenter_login_service',
         'icon'  => 'fa-gears',
     ];
 }

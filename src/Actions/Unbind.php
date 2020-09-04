@@ -1,27 +1,18 @@
 <?php
 
-namespace Encore\WJScanLogin\Actions;
+namespace Encore\WJUcenterLoginService\Actions;
 
-use Encore\Admin\Actions\Response;
 use Encore\Admin\Actions\RowAction;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
 class Unbind extends RowAction
 {
-    /**
-     * @return array|null|string
-     */
     public function name()
     {
         return '账号解绑';
     }
 
-    /**
-     * @param Model $model
-     *
-     * @return Response
-     */
     public function handle(Model $model)
     {
         $trans = [
@@ -40,9 +31,6 @@ class Unbind extends RowAction
         return $this->response()->success($trans['succeeded'])->refresh();
     }
 
-    /**
-     * @return void
-     */
     public function dialog()
     {
         $this->question(trans('admin.delete_confirm'), '', ['confirmButtonColor' => '#d33']);

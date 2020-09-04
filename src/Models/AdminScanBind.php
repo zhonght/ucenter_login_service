@@ -1,6 +1,6 @@
 <?php
 
-namespace Encore\WJScanLogin\Models;
+namespace Encore\WJUcenterLoginService\Models;
 
 use Illuminate\Database\Eloquent\Model;
 

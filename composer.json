@@ -1,9 +1,9 @@
 {
-    "name": "zhonght/wj_scan_login",
-    "description": "微聚扫码登陆",
+    "name": "weigather/ucenter_login_service",
+    "description": "微聚登陆服务",
     "type": "library",
     "keywords": ["laravel-admin", "extension"],
-    "homepage": "https://github.com/zhonght/wj_scan_login",
+    "homepage": "https://github.com/zhonght/ucenter_login_service",
     "license": "MIT",
     "authors": [
         {
@@ -21,13 +21,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Encore\\WJScanLogin\\": "src/"
+            "Encore\\WJUcenterLoginService\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Encore\\WJScanLogin\\WJScanLoginServiceProvider"
+                "Encore\\WJUcenterLoginService\\WJUcenterLoginServiceServiceProvider"
             ]
         }
     }

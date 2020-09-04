@@ -1,6 +1,6 @@
 <?php
 
-namespace Encore\WJScanLogin\Http\Controllers;
+namespace Encore\WJUcenterLoginService\Http\Controllers\Admin;
 
 
 use Encore\Admin\Controllers\UserController;
@@ -8,8 +8,8 @@ use Encore\Admin\Controllers\UserController;
 use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Widgets\Table;
-use Encore\WJScanLogin\Models\AdminScanBind;
-use Encore\WJScanLogin\Render\BindCode;
+use Encore\WJUcenterLoginService\Models\AdminScanBind;
+use Encore\WJUcenterLoginService\Render\BindCode;
 
 class AdminUserController extends UserController
 {
@@ -23,20 +23,15 @@ class AdminUserController extends UserController
 
     public function scanGrid(){
 
-
         $userModel = config('admin.database.users_model');
         $grid = new Grid(new $userModel());
         $grid->column('id', 'ID')->sortable();
         $grid->column('username', trans('admin.username'));
         $grid->column('name', trans('admin.name'));
         $grid->column('roles', trans('admin.roles'))->pluck('name')->label();
-
-
         $grid->column('scan_bind_code', '扫码绑定')->display(function () {
             return "点击生成二维码";
         })->modal( "绑定二维码",BindCode::class);
-
-
         $grid->column('scan_bind_list', '绑定列表')->display(function () {
             return "【".AdminScanBind::where('admin_id',$this->id)->count()."】点击查看";
         })->expand(function ($model) {
@@ -48,7 +43,6 @@ class AdminUserController extends UserController
                         $comment->user_token,
                         $comment->created_at,
                         '<a data-_key="'.$comment->id.'" href="javascript:void(0)" onclick="deleteBindInfo(this);" class="grid-row-action-scan-unbind">解绑</a>'
-//.'&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" onclick="changeBind('.$comment->id.');">换绑</a>'
                     ];
                 })->toArray();
             }else{
@@ -56,7 +50,6 @@ class AdminUserController extends UserController
             }
             return new Table(['id', '用户标识', '绑定时间', '操作'],$comments);
         });
-
         $grid->column('created_at', trans('admin.created_at'));
         $grid->column('updated_at', trans('admin.updated_at'));
         $grid->actions(function (Grid\Displayers\Actions $actions) {
@@ -69,7 +62,6 @@ class AdminUserController extends UserController
                 $actions->disableDelete();
             });
         });
-
         return $grid;
     }
 }

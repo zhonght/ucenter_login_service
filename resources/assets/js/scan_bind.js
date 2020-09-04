@@ -99,20 +99,10 @@ var actionCatcher = function (request) {
     }
 };
 
-// function changeBind(id){
-// $("td.column-scan_bind_code span[data-target='#grid-modal-"+id+"-scan_bind_code']").html("3245")
-// }
-//
-//
-
-
-
-
-
 function deleteBindInfo(that) {
         var data = $(that).data();
         var target = $(that);
-        Object.assign(data, {"_model": "Encore_WJScanLogin_Models_AdminScanBind"});
+        Object.assign(data, {"_model": "Encore_WJUcenterLoginService_Models_AdminScanBind"});
         var process = $.admin.swal({
             "type": "question",
             "showCancelButton": true,
@@ -126,7 +116,7 @@ function deleteBindInfo(that) {
                 return new Promise(function (resolve, reject) {
                     Object.assign(data, {
                         _token: $.admin.token,
-                        _action: 'Encore_WJScanLogin_Actions_Unbind',
+                        _action: 'Encore_WJUcenterLoginService_Actions_Unbind',
                         _input: input,
                     });
 
@@ -157,7 +147,6 @@ function deleteBindInfo(that) {
             return [response, target];
         });
         process.then(actionResolver).catch(actionCatcher);
-
 }
 
 

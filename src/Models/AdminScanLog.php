@@ -1,10 +1,9 @@
 <?php
 
-namespace Encore\WJScanLogin\Models;
+namespace Encore\WJUcenterLoginService\Models;
 
-use Encore\WJScanLogin\SDK\ServiceUserCenter;
-use Encore\Admin\Auth\Database\Administrator;
 use Illuminate\Database\Eloquent\Model;
+use Encore\WJUcenterLoginService\SDK\ServiceUserCenter;
 
 class AdminScanLog extends Model
 {
@@ -28,7 +27,7 @@ class AdminScanLog extends Model
         $userModel = config('admin.database.users_model');
         $adminUser = $userModel::query()->find($adminId);
         $model = new ServiceUserCenter();
-        return $model->scanVerify($adminUser->name, $adminUser->username, resource_url($adminUser->avatar), encrypt([
+        return $model->scanVerify($adminUser->name, $adminUser->username, wj_ucenter_login_service_resource_url($adminUser->avatar), encrypt([
             'type' => 'verify_qr_code',
             'id' => $adminUser->id,
             'time' => time()
@@ -40,7 +39,7 @@ class AdminScanLog extends Model
         $userModel = config('admin.database.users_model');
         $adminUser = $userModel::query()->find($adminId);
         $model = new ServiceUserCenter();
-        return $model->scanBind($adminUser->name, $adminUser->username, resource_url($adminUser->avatar));
+        return $model->scanBind($adminUser->name, $adminUser->username, wj_ucenter_login_service_resource_url($adminUser->avatar));
     }
 
 }
