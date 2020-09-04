@@ -208,7 +208,7 @@ function passwordLogin(){
         _token:csrfToken,
     }, function (result) {
         if(result['code'] == '00'){
-
+            toast(result['msg'],result['data'][0]);
         }else if(result['code'] == '403'){
 
             // 开始扫码验证

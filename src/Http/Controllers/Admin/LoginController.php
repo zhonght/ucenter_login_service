@@ -46,12 +46,21 @@ class LoginController extends Controller
             if ($this->guard()->validate($credentials)) {
                 $userModel = config('admin.database.users_model');
                 $adminModel = $userModel::query()->where('username', $request->username)->first();
-                return wj_ucenter_login_service_return('403', [
-                    'username' => $adminModel->username,
-                    'name' => $adminModel->name,
-                    'token' => encrypt(['type' => 'create_qr_code', 'id' => $adminModel->id, 'time' => time()]),
-                    'is_verify' => AdminScanBind::where('admin_id', $adminModel->id)->count() > 0,
-                ]);
+
+                if (config('wj_ucenter_login_service.verify_enable')) {
+                    return wj_ucenter_login_service_return('403', [
+                        'username' => $adminModel->username,
+                        'name' => $adminModel->name,
+                        'token' => encrypt(['type' => 'create_qr_code', 'id' => $adminModel->id, 'time' => time()]),
+                        'is_verify' => AdminScanBind::where('admin_id', $adminModel->id)->count() > 0,
+                    ]);
+                }else{
+                    if ($this->guard()->loginUsingId($adminModel->id)) {
+                        admin_toastr(trans('admin.login_successful'));
+                        $request->session()->regenerate();
+                        return wj_ucenter_login_service_return('00', [$this->redirectPath()],'登陆成功');
+                    }
+                }
             }
             return wj_ucenter_login_service_return('500', [], '账号密码错误');
         }
