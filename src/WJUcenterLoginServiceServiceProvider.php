@@ -3,8 +3,10 @@
 namespace Encore\WJUcenterLoginService;
 
 use Encore\Admin\Facades\Admin;
+use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Route;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class WJUcenterLoginServiceServiceProvider extends ServiceProvider
 {
@@ -33,6 +35,7 @@ class WJUcenterLoginServiceServiceProvider extends ServiceProvider
         if (config('wj_ucenter_login_service.scan_enable')) {
 
 
+            AliasLoader::getInstance()->alias('QrCode',QrCode::class);
             Admin::css([
                 admin_asset("vendor/weigather/wj_ucenter_login_service/css/scan_login.css"),
                 admin_asset("vendor/weigather/wj_ucenter_login_service/css/scan_login_admin.css")

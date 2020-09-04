@@ -30,7 +30,8 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Encore\\WJUcenterLoginService\\WJUcenterLoginServiceServiceProvider"
+                "Encore\\WJUcenterLoginService\\WJUcenterLoginServiceServiceProvider",
+                "SimpleSoftwareIO\\QrCode\\QrCodeServiceProvider"
             ]
         }
     }
