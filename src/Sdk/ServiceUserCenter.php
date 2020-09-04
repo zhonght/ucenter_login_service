@@ -49,12 +49,6 @@ class ServiceUserCenter
         return $data;
     }
 
-    public function accessTokenSign($data = [])
-    {
-        $data['app_id'] = $this->appId;
-        return $data;
-    }
-
     /**
      * 生成签名
      * @param $data
@@ -160,9 +154,6 @@ class ServiceUserCenter
         }
         $opts[CURLOPT_HTTPHEADER] = $opts[CURLOPT_HTTPHEADER]??[];
         $opts[CURLOPT_HTTPHEADER][] = 'accept-language:'.$this->lang;
-        if(!is_null($this->accessToken)){
-            $opts[CURLOPT_HTTPHEADER][] = 'Authorization:'.$this->accessToken;
-        }
         /* 初始化并执行curl请求 */
         $ch = curl_init();
         curl_setopt_array($ch, $opts);

@@ -22,13 +22,20 @@
     "autoload": {
         "psr-4": {
             "Encore\\WJUcenterLoginService\\": "src/"
-        }
+        },
+        "files":[
+            "src/Helpers/functions.php"
+        ]
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Encore\\WJUcenterLoginService\\WJUcenterLoginServiceServiceProvider"
-            ]
+                "Encore\\WJUcenterLoginService\\WJUcenterLoginServiceServiceProvider",
+                "SimpleSoftwareIO\\QrCode\\ServiceProvider"
+            ],
+            "aliases": {
+                "QrCode": "SimpleSoftwareIO\\QrCode\\Facade"
+            }
         }
     }
 }

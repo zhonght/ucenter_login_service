@@ -121,7 +121,7 @@ class AdminController extends Controller
      * @return string
      */
     private function _scanQrCodeUrl($url){
-        $svg =QrCode::size(250)->generate($url);
+        $svg = QrCode::size(250)->generate($url);
         $str = rawurlencode($svg);
         $ret = '';
         $len = strlen ( $str );

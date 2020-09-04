@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAdminScanLogTable extends Migration
+class CreateWJUcenterLoginServiceTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,6 +13,12 @@ class CreateAdminScanLogTable extends Migration
      */
     public function up()
     {
+        Schema::create('admin_scan_bind', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('admin_id')->index()->comment('账号id');
+            $table->string('user_token',128)->comment('绑定的用户');
+            $table->timestamps();
+        });
         Schema::create('admin_scan_log', function (Blueprint $table) {
             $table->increments('id');
             $table->string('code_id',128)->comment('二维码编号');
@@ -34,6 +40,7 @@ class CreateAdminScanLogTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('admin_scan_bind');
         Schema::dropIfExists('admin_scan_log');
     }
 }
