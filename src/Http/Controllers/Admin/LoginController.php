@@ -2,16 +2,25 @@
 
 namespace Encore\WJUcenterLoginService\Http\Controllers\Admin;
 
-use Encore\WJUcenterLoginService\Models\AdminScanBind;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Validator;
+use Encore\WJUcenterLoginService\Models\AdminScanBind;
 
+/**
+ * 重写的登陆逻辑
+ * Class LoginController
+ * @package Encore\WJUcenterLoginService\Http\Controllers\Admin
+ */
 class LoginController extends Controller
 {
 
+    /**
+     * 登陆页面
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
+     */
     public function getLogin()
     {
         if ($this->guard()->check()) {
@@ -20,6 +29,11 @@ class LoginController extends Controller
         return view('wj_ucenter_login_service::index');
     }
 
+    /**
+     * 登陆逻辑
+     * @param Request $request
+     * @return array|\Illuminate\Http\RedirectResponse
+     */
     public function postLogin(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -66,6 +80,11 @@ class LoginController extends Controller
         }
     }
 
+    /**
+     * 登陆成的跳转
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     protected function sendLoginResponse(Request $request)
     {
         admin_toastr(trans('admin.login_successful'));
@@ -73,7 +92,10 @@ class LoginController extends Controller
         return redirect()->intended($this->redirectPath());
     }
 
-
+    /**
+     * 登陆失败的文字
+     * @return array|\Illuminate\Contracts\Translation\Translator|null|string
+     */
     protected function getFailedLoginMessage()
     {
         return Lang::has('auth.failed')
@@ -81,6 +103,10 @@ class LoginController extends Controller
             : 'These credentials do not match our records.';
     }
 
+    /**
+     * 获取跳转地址
+     * @return \Illuminate\Config\Repository|mixed
+     */
     protected function redirectPath()
     {
         if (method_exists($this, 'redirectTo')) {
@@ -89,7 +115,10 @@ class LoginController extends Controller
         return property_exists($this, 'redirectTo') ? $this->redirectTo : config('admin.route.prefix');
     }
 
-
+    /**
+     * 认证器
+     * @return \Illuminate\Contracts\Auth\Guard|\Illuminate\Contracts\Auth\StatefulGuard
+     */
     protected function guard()
     {
         return Auth::guard('admin');

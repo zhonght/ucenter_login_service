@@ -30,8 +30,7 @@
     <![endif]-->
 </head>
 <body class="hold-transition login-page"
-      style="background: url({{ admin_asset("vendor/weigather/wj_ucenter_login_service/img/login_bg.jpg") }}) center center no-repeat;background-size: cover;">
-{{--<body class="hold-transition login-page" >--}}
+      style="background: url({{ config('wj_ucenter_login_service.login_bg_img')?:admin_asset("vendor/weigather/wj_ucenter_login_service/img/login_bg.jpg") }}) center center no-repeat;background-size: cover;">
 
 
 <div class="login-box">
@@ -95,7 +94,6 @@
             <span id="tip3" style="display:none;">二维码已过期<br><br><a class="refresh_qrcode">重新扫描</a></span>
         </div>
     </div>
-
 
     <!-- 全部使用admin_token登陆 -->
     <form action="" id="to_login_form" method="post" style="display: none">

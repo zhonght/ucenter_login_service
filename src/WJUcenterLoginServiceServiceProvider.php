@@ -32,8 +32,8 @@ class WJUcenterLoginServiceServiceProvider extends ServiceProvider
         }
 
 
+        // 如果开了扫码登陆
         if (config('wj_ucenter_login_service.scan_enable')) {
-
 
             AliasLoader::getInstance()->alias('QrCode',QrCode::class);
             Admin::css([
@@ -47,9 +47,10 @@ class WJUcenterLoginServiceServiceProvider extends ServiceProvider
             if ($views = $extension->views()) {
                 $this->loadViewsFrom($views, 'wj_ucenter_login_service');
             }
+
+            // 设置扫码相关路由
             $this->app->booted(function () {
                 WJUcenterLoginService::routes(__DIR__ . '/../routes/web.php');
-
 
                 // 开放接口出来
                 Route::group(array_merge(

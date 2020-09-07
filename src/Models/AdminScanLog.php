@@ -5,6 +5,11 @@ namespace Encore\WJUcenterLoginService\Models;
 use Illuminate\Database\Eloquent\Model;
 use Encore\WJUcenterLoginService\SDK\ServiceUserCenter;
 
+/**
+ * 二维码记录的模型
+ * Class AdminScanLog
+ * @package Encore\WJUcenterLoginService\Models
+ */
 class AdminScanLog extends Model
 {
     public $table = 'admin_scan_log';
@@ -15,13 +20,21 @@ class AdminScanLog extends Model
         'result' => 'json',
     ];
 
-
+    /**
+     * 创建登陆二维码
+     * @return mixed
+     */
     public static function createLoginCode()
     {
         $model = new ServiceUserCenter();
         return $model->scanLogin();
     }
 
+
+    /**
+     * 创建验证二维码
+     * @return mixed
+     */
     public static function createVerifyCode($adminId)
     {
         $userModel = config('admin.database.users_model');
@@ -34,6 +47,11 @@ class AdminScanLog extends Model
         ]));
     }
 
+    /**
+     * 创建绑定二维码
+     * @param $adminId
+     * @return mixed
+     */
     public static function createBindCode($adminId)
     {
         $userModel = config('admin.database.users_model');

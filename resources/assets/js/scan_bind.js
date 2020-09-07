@@ -59,6 +59,7 @@ function getQrCodeStatus(key) {
         }
     });
 }
+
 var actionResolver = function (data) {
     var response = data[0];
     var target   = data[1];
@@ -137,13 +138,11 @@ function deleteBindInfo(that) {
             if (typeof result.dismiss !== 'undefined') {
                 return Promise.reject();
             }
-
             if (typeof result.status === "boolean") {
                 var response = result;
             } else {
                 var response = result.value;
             }
-
             return [response, target];
         });
         process.then(actionResolver).catch(actionCatcher);

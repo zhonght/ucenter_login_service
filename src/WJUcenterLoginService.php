@@ -12,4 +12,6 @@ class WJUcenterLoginService extends Extension
 
     public $assets = __DIR__.'/../resources/assets';
 
+    public $migrations = __DIR__.'/../database/migrations';
+
 }

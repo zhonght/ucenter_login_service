@@ -22,6 +22,7 @@ if (!function_exists('wj_ucenter_login_service_return')) {
 
 if (!function_exists('wj_ucenter_login_service_resource_url')) {
     /**
+     * 图片url处理
      * @param $url
      * @return string
      */
