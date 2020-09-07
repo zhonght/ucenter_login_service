@@ -133,6 +133,15 @@
     $(function () {
         $('.scan-check').click();
     });
+    document.onkeydown = function (e) {
+        var theEvent = window.event || e;
+        var code = theEvent.keyCode || theEvent.which || theEvent.charCode;
+        if (code == 13) {
+            if (!$('#account_login').is(':hidden')) {
+                $('.scan-password-btn').click();
+            }
+        }
+    }
 </script>
 </body>
 </html>

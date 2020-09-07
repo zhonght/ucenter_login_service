@@ -12,9 +12,4 @@ class WJUcenterLoginService extends Extension
 
     public $assets = __DIR__.'/../resources/assets';
 
-    public $menu = [
-        'title' => '扫码登陆',
-        'path'  => 'wj_ucenter_login_service',
-        'icon'  => 'fa-gears',
-    ];
 }
