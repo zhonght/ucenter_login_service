@@ -3,11 +3,12 @@
 namespace Weigather\WJUcenterLoginService\Http\Controllers\Admin;
 
 use Encore\Admin\Grid;
+use Encore\Admin\Form;
+use Illuminate\Http\Request;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Controllers\UserController;
 use Encore\Admin\Auth\Database\Administrator;
-use Illuminate\Http\Request;
 use Weigather\WJUcenterLoginService\Models\AdminScanBind;
 
 /**
@@ -49,7 +50,7 @@ class AdminUserController extends UserController
             });
 
             $grid->scan_bind_list('绑定列表')->display(function () {
-                return "<a href='" . admin_url('wj_scan/list/' . $this->id) . "'>【" . AdminScanBind::where('admin_id', $this->id)->count() . "】点击查看</a>";
+                return "<a  target='_blank' href='" . admin_url('wj_scan/list/' . $this->id) . "'>【" . AdminScanBind::where('admin_id', $this->id)->count() . "】点击查看</a>";
             });
 
             $grid->created_at(trans('admin::lang.created_at'));
@@ -116,5 +117,38 @@ class AdminUserController extends UserController
         });
     }
 
+    /**
+     * 删除操作
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function scanBindDestroy(Request $request)
+    {
+        if ($this->scanBindForm()->destroy($request->id)) {
+            return response()->json([
+                'status'  => true,
+                'message' => trans('admin::lang.delete_succeeded'),
+            ]);
+        } else {
+            return response()->json([
+                'status'  => false,
+                'message' => trans('admin::lang.delete_failed'),
+            ]);
+        }
+    }
+
+    /**
+     * 删除的表单
+     * @return mixed
+     */
+    protected function scanBindForm()
+    {
+        return Admin::form(
+            AdminScanBind::class,
+            function (Form $form) {
+                $form->display('id', 'ID');
+                $form->text('user_token', '用户标识');
+            });
+    }
 
 }
