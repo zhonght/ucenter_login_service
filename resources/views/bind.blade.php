@@ -1,4 +1,4 @@
-<div class="login-box">
+<div class="login-box" id="grid-modal-{{$key}}-scan_bind_code">
     <div class="login-box-body id_scan_login">
         <div class="scan-qr-code">
             <div class="scan-mark">
@@ -14,8 +14,11 @@
 </div>
 
 <script>
-    var qrCodeLoading = '{{$qrCodeLoading}}';
-    var csrfToken = '{{$csrfToken}}';
+    var qrCodeLoading =  "{{ admin_asset("vendor/weigather/wj_ucenter_login_service/img/qr_code_loading.gif")}}";
+    var csrfToken ="{{ csrf_token() }}";
+    $(function(){
+        getLoginQrCode('{{$key}}');
+    })
 </script>
 <style>
     td.column-scan_bind_code span.grid-expand i{

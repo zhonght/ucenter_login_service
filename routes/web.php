@@ -14,6 +14,9 @@ Route::get('auth/login',  LoginController::class . '@getLogin');
 Route::post('auth/login',  LoginController::class . '@postLogin');
 
 
+Route::get('wj_scan/list/{adminId}', AdminUserController::class . '@scanList');
+Route::get('wj_scan/bind/{adminId}', AdminUserController::class . '@scanBind');
+
 // 绑定二维码生成接口
 Route::group([
     'prefix' => 'api'

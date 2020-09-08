@@ -3,6 +3,9 @@
 use \Weigather\WJUcenterLoginService\Http\Controllers\Api\ApiController;
 use \Weigather\WJUcenterLoginService\Http\Controllers\Api\AdminController;
 
+Route::get('fuck', function(){
+    return  444;
+});
 Route::group([
     'prefix' => 'api'
 ], function ($route) {

@@ -47,7 +47,7 @@ class LoginController extends Controller
             }
             $adminUser = decrypt($request->admin_token);
             if ($this->guard()->loginUsingId($adminUser['id'])) {
-                return $this->sendLoginResponse($request);
+                return redirect()->intended(config('admin.prefix'));
             }
             return back()->withInput()->withErrors([
                 'username' => $this->getFailedLoginMessage(),
@@ -69,9 +69,8 @@ class LoginController extends Controller
                         'is_verify' => AdminScanBind::where('admin_id', $adminModel->id)->count() > 0,
                     ]);
                 }else{
-                    if ($this->guard()->loginUsingId($adminModel->id)) {
-                        admin_toastr(trans('admin.login_successful'));
-                        $request->session()->regenerate();
+                    if ($this->guard()->attempt($credentials) ){
+                        admin_toastr(trans('admin::lang.login_successful'));
                         return wj_ucenter_login_service_return('00', [url($this->redirectPath())],'登陆成功');
                     }
                 }
@@ -88,7 +87,6 @@ class LoginController extends Controller
     protected function sendLoginResponse(Request $request)
     {
         admin_toastr(trans('admin.login_successful'));
-        $request->session()->regenerate();
         return redirect()->intended($this->redirectPath());
     }
 
@@ -112,7 +110,7 @@ class LoginController extends Controller
         if (method_exists($this, 'redirectTo')) {
             return $this->redirectTo();
         }
-        return property_exists($this, 'redirectTo') ? $this->redirectTo : config('admin.route.prefix');
+        return property_exists($this, 'redirectTo') ? $this->redirectTo :config('admin.prefix');
     }
 
     /**

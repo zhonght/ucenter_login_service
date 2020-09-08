@@ -6,27 +6,22 @@
     <title>{{config('admin.title')}} | {{ trans('admin.login') }}</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-
-    @if(!is_null($favicon = Admin::favicon()))
-        <link rel="shortcut icon" href="{{$favicon}}">
-@endif
-
-<!-- Bootstrap 3.3.5 -->
-    <link rel="stylesheet" href="{{ admin_asset("vendor/laravel-admin/AdminLTE/bootstrap/css/bootstrap.min.css") }}">
+    <!-- Bootstrap 3.3.5 -->
+    <link rel="stylesheet" href="{{ asset("/packages/admin/AdminLTE/bootstrap/css/bootstrap.min.css") }}">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="{{ admin_asset("vendor/laravel-admin/font-awesome/css/font-awesome.min.css") }}">
+    <link rel="stylesheet" href="{{ asset("/packages/admin/font-awesome/css/font-awesome.min.css") }}">
     <!-- Theme style -->
-    <link rel="stylesheet" href="{{ admin_asset("vendor/laravel-admin/AdminLTE/dist/css/AdminLTE.min.css") }}">
+    <link rel="stylesheet" href="{{ asset("/packages/admin/AdminLTE/dist/css/AdminLTE.min.css") }}">
     <!-- iCheck -->
-    <link rel="stylesheet" href="{{ admin_asset("vendor/laravel-admin/AdminLTE/plugins/iCheck/square/blue.css") }}">
+    <link rel="stylesheet" href="{{ asset("/packages/admin/AdminLTE/plugins/iCheck/square/blue.css") }}">
 
     <link rel="stylesheet" href="{{ admin_asset("vendor/weigather/wj_ucenter_login_service/css/scan_login.css") }}">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
-    <script src="//oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
 <body class="hold-transition login-page"
@@ -41,22 +36,22 @@
 
     <div class="login-box-body" id="account_login" style="display: none">
         <a href="javascript:;" class="scan-check"></a>
-        <p class="login-box-msg">{{ trans('admin.login') }}</p>
+        <p class="login-box-msg">登陆</p>
         <form action="{{ admin_url('auth/login') }}" method="post" id="password_login_form">
             <div class="form-group has-feedback">
                 <input type="text" id="password_login_username" class="form-control"
-                       placeholder="{{ trans('admin.username') }}" name="username">
+                       placeholder="{{ trans('admin::lang.username') }}" name="username">
             </div>
             <div class="form-group has-feedback">
                 <input type="password" id="password_login_password" class="form-control"
-                       placeholder="{{ trans('admin.password') }}" name="password">
+                       placeholder="{{ trans('admin::lang.password') }}" name="password">
             </div>
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
             <div class="row">
                 <div class="col-xs-12">
                     <button type="button"
-                            class="scan-password-btn btn btn-primary btn-block btn-flat">{{ trans('admin.login') }}</button>
+                            class="scan-password-btn btn btn-primary btn-block btn-flat">{{ trans('admin::lang.login') }}</button>
                 </div>
             </div>
         </form>
@@ -82,7 +77,7 @@
 
     <div class="login-box-body" id="scan_login" style="display: none">
         <a href="javascript:;" class="account-check">使用帐号登录</a>
-        <p class="login-box-msg">{{ trans('admin.login') }}</p>
+        <p class="login-box-msg">登陆</p>
         <div class="scan-qr-code">
             <div class="scan-mark">
                 <div id="scan_mark" style="display:none;"></div>
@@ -105,11 +100,11 @@
 <!-- /.login-box -->
 
 <!-- jQuery 2.1.4 -->
-<script src="{{ admin_asset("vendor/laravel-admin/AdminLTE/plugins/jQuery/jQuery-2.1.4.min.js")}} "></script>
+<script src="{{ asset("/packages/admin/AdminLTE/plugins/jQuery/jQuery-2.1.4.min.js")}} "></script>
 <!-- Bootstrap 3.3.5 -->
-<script src="{{ admin_asset("vendor/laravel-admin/AdminLTE/bootstrap/js/bootstrap.min.js")}}"></script>
+<script src="{{ asset("/packages/admin/AdminLTE/bootstrap/js/bootstrap.min.js")}}"></script>
 <!-- iCheck -->
-<script src="{{ admin_asset("vendor/laravel-admin/AdminLTE/plugins/iCheck/icheck.min.js")}}"></script>
+<script src="{{ asset("/packages/admin/AdminLTE/plugins/iCheck/icheck.min.js")}}"></script>
 <script>
     $(function () {
         $('input').iCheck({
