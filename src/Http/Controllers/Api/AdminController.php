@@ -1,13 +1,13 @@
 <?php
 
-namespace Encore\WJUcenterLoginService\Http\Controllers\Api;
+namespace Weigather\WJUcenterLoginService\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
-use Encore\WJUcenterLoginService\Models\AdminScanBind;
-use Encore\WJUcenterLoginService\Models\AdminScanLog;
+use Weigather\WJUcenterLoginService\Models\AdminScanBind;
+use Weigather\WJUcenterLoginService\Models\AdminScanLog;
 
 /**
  * 后台自己调用的接口

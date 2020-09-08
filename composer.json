@@ -25,7 +25,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Encore\\WJUcenterLoginService\\": "src/"
+      "Weigather\\WJUcenterLoginService\\": "src/"
     },
     "files": [
       "src/Helpers/functions.php"
@@ -34,7 +34,7 @@
   "extra": {
     "laravel": {
       "providers": [
-        "Encore\\WJUcenterLoginService\\WJUcenterLoginServiceServiceProvider",
+        "Weigather\\WJUcenterLoginService\\WJUcenterLoginServiceServiceProvider",
         "SimpleSoftwareIO\\QrCode\\QrCodeServiceProvider"
       ]
     }

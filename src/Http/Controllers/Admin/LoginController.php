@@ -1,13 +1,13 @@
 <?php
 
-namespace Encore\WJUcenterLoginService\Http\Controllers\Admin;
+namespace Weigather\WJUcenterLoginService\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Validator;
-use Encore\WJUcenterLoginService\Models\AdminScanBind;
+use Weigather\WJUcenterLoginService\Models\AdminScanBind;
 
 /**
  * 重写的登陆逻辑

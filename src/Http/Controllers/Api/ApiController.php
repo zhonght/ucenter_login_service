@@ -1,14 +1,14 @@
 <?php
 
-namespace Encore\WJUcenterLoginService\Http\Controllers\Api;
+namespace Weigather\WJUcenterLoginService\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
 use Encore\Admin\Auth\Database\Administrator;
-use Encore\WJUcenterLoginService\Models\AdminScanLog;
-use Encore\WJUcenterLoginService\Models\AdminScanBind;
-use Encore\WJUcenterLoginService\SDK\ServiceUserCenter;
+use Weigather\WJUcenterLoginService\Models\AdminScanLog;
+use Weigather\WJUcenterLoginService\Models\AdminScanBind;
+use Weigather\WJUcenterLoginService\SDK\ServiceUserCenter;
 
 /**
  * 提供给用户中心接口的控制器

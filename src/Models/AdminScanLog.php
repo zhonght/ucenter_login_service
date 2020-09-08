@@ -1,9 +1,9 @@
 <?php
 
-namespace Encore\WJUcenterLoginService\Models;
+namespace Weigather\WJUcenterLoginService\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Encore\WJUcenterLoginService\SDK\ServiceUserCenter;
+use Weigather\WJUcenterLoginService\SDK\ServiceUserCenter;
 
 /**
  * 二维码记录的模型

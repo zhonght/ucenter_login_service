@@ -1,6 +1,6 @@
 <?php
 
-namespace Encore\WJUcenterLoginService;
+namespace Weigather\WJUcenterLoginService;
 
 use Encore\Admin\Facades\Admin;
 use Illuminate\Foundation\AliasLoader;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Encore\WJUcenterLoginService\SDK;
+namespace Weigather\WJUcenterLoginService\SDK;
 
 /*
  * 统一用户服务 SDK

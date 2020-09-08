@@ -103,7 +103,7 @@ var actionCatcher = function (request) {
 function deleteBindInfo(that) {
         var data = $(that).data();
         var target = $(that);
-        Object.assign(data, {"_model": "Encore_WJUcenterLoginService_Models_AdminScanBind"});
+        Object.assign(data, {"_model": "Weigather_WJUcenterLoginService_Models_AdminScanBind"});
         var process = $.admin.swal({
             "type": "question",
             "showCancelButton": true,
@@ -117,7 +117,7 @@ function deleteBindInfo(that) {
                 return new Promise(function (resolve, reject) {
                     Object.assign(data, {
                         _token: $.admin.token,
-                        _action: 'Encore_WJUcenterLoginService_Actions_Unbind',
+                        _action: 'Weigather_WJUcenterLoginService_Actions_Unbind',
                         _input: input,
                     });
 

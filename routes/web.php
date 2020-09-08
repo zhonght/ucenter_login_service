@@ -1,8 +1,8 @@
 <?php
 
-use \Encore\WJUcenterLoginService\Http\Controllers\Api\AdminController;
-use \Encore\WJUcenterLoginService\Http\Controllers\Admin\LoginController;
-use \Encore\WJUcenterLoginService\Http\Controllers\Admin\AdminUserController;
+use \Weigather\WJUcenterLoginService\Http\Controllers\Api\AdminController;
+use \Weigather\WJUcenterLoginService\Http\Controllers\Admin\LoginController;
+use \Weigather\WJUcenterLoginService\Http\Controllers\Admin\AdminUserController;
 
 
 // 后台的用户列表路由重置

@@ -1,7 +1,7 @@
 <?php
 
-use \Encore\WJUcenterLoginService\Http\Controllers\Api\ApiController;
-use \Encore\WJUcenterLoginService\Http\Controllers\Api\AdminController;
+use \Weigather\WJUcenterLoginService\Http\Controllers\Api\ApiController;
+use \Weigather\WJUcenterLoginService\Http\Controllers\Api\AdminController;
 
 Route::group([
     'prefix' => 'api'

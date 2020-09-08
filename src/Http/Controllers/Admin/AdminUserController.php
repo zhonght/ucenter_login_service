@@ -1,12 +1,12 @@
 <?php
 
-namespace Encore\WJUcenterLoginService\Http\Controllers\Admin;
+namespace Weigather\WJUcenterLoginService\Http\Controllers\Admin;
 
 use Encore\Admin\Grid;
 use Encore\Admin\Widgets\Table;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Controllers\UserController;
-use Encore\WJUcenterLoginService\Models\AdminScanBind;
+use Weigather\WJUcenterLoginService\Models\AdminScanBind;
 
 /**
  * 重写后台用户列表
