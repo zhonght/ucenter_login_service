@@ -12,8 +12,9 @@
         </div>
     </div>
 </div>
-
 <script>
+    var csrfToken="{{csrf_token()}}";
+    var qrCodeLoading="{{admin_asset("vendor/laravel-admin-ext/wj_scan_login/img/qr_code_loading.gif")}}";
     $(function(){
         getLoginQrCode('{{$key}}');
     });

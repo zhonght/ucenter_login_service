@@ -1,6 +1,6 @@
 <?php
 
-namespace Weigather\WJScanLogin\Render;
+namespace Weigather\WJUcenterLoginService\Render;
 
 use Illuminate\Contracts\Support\Renderable;
 
@@ -11,7 +11,7 @@ class BindCode implements Renderable
     {
         $userModel = config('admin.database.users_model');
         $adminUser = $userModel::query()->find($key);
-        return view('wj_scan_login::bind',compact('key','adminUser'));
+        return view('wj_ucenter_login_service::bind',compact('key','adminUser'));
     }
 
 }

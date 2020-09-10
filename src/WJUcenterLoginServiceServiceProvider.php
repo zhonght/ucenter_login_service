@@ -40,10 +40,6 @@ class WJUcenterLoginServiceServiceProvider extends ServiceProvider
                 admin_asset("vendor/weigather/wj_ucenter_login_service/css/scan_login.css"),
                 admin_asset("vendor/weigather/wj_ucenter_login_service/css/scan_login_admin.css")
             ]);
-            Admin::html('<script>
-            var csrfToken="' . csrf_token() . '";
-            var qrCodeLoading="' . admin_asset("vendor/laravel-admin-ext/wj_scan_login/img/qr_code_loading.gif") . '";
-            </script>');
             Admin::js([
                 admin_asset("vendor/weigather/wj_ucenter_login_service/js/scan_bind.js")
             ]);

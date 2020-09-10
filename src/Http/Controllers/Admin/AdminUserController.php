@@ -5,8 +5,8 @@ namespace Weigather\WJUcenterLoginService\Http\Controllers\Admin;
 use Encore\Admin\Grid;
 use Encore\Admin\Widgets\Table;
 use Encore\Admin\Layout\Content;
-use Weigather\WJScanLogin\Render\BindCode;
 use Encore\Admin\Controllers\UserController;
+use Weigather\WJUcenterLoginService\Render\BindCode;
 use Weigather\WJUcenterLoginService\Models\AdminScanBind;
 
 /**
