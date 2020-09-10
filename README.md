@@ -7,7 +7,7 @@ laravel-admin ucenter_login_service
      
 ### 发布资源文件
 
-    php artisan vendor:publish --provider="Encore\WJUcenterLoginService\WJUcenterLoginServiceServiceProvider"
+    php artisan vendor:publish --provider="Weigather\WJUcenterLoginService\WJUcenterLoginServiceServiceProvider"
     
 ### 执行数据库迁移文件
 
@@ -25,6 +25,10 @@ laravel-admin ucenter_login_service
 	  <tr>
 	    <td>^1.0</td>
 	    <td>>= 1.6.10</td>
+	  </tr>
+	  <tr>
+	    <td>^2.0</td>
+	    <td>>= 1.8.1</td>
 	  </tr>
 	</table>
 </div> 

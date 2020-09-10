@@ -14,11 +14,7 @@
 </div>
 
 <script>
-    var qrCodeLoading = '{{$qrCodeLoading}}';
-    var csrfToken = '{{$csrfToken}}';
+    $(function(){
+        getLoginQrCode('{{$key}}');
+    });
 </script>
-<style>
-    td.column-scan_bind_code span.grid-expand i{
-        display: none;
-    }
-</style>
