@@ -26,7 +26,11 @@ class LoginController extends Controller
         if ($this->guard()->check()) {
             return redirect($this->redirectPath());
         }
-        return view('wj_ucenter_login_service::index');
+        $externalTemplate = config('wj_ucenter_login_service.external_template');
+        if(!is_null($externalTemplate)){
+            return $externalTemplate;
+        }
+        return view('wj_ucenter_login_service::template.'.config('wj_ucenter_login_service.external_template').'.index');
     }
 
     /**

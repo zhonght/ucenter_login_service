@@ -1,0 +1,189 @@
+.login-box-body{
+
+}
+.login-box-body, .register-box-body{
+    position: relative;
+}
+.login-box-msg, .register-box-msg{
+    text-align: left;
+    font-size: 16px;
+    padding: 0 20px 30px 0;
+}
+.form-group{
+
+}
+.scan-check{
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 60px;
+    width: 60px;
+    overflow: hidden;
+    background: url(../img/check.svg) no-repeat top right;
+    background-size: 100%;
+}
+.account-check{
+    position: absolute;
+    top: 0;
+    right:15px;
+    text-align: center;
+    height: 60px;
+    line-height: 60px;
+    overflow: hidden;
+    color: #576b95;
+}
+.login-check{
+    position: absolute;
+    top: 0;
+    right:15px;
+    text-align: center;
+    height: 60px;
+    line-height: 60px;
+    overflow: hidden;
+    color: #576b95;
+}
+.scan-mark{
+    width: 100%;
+    float: left;
+    position: relative;
+}
+.scan-password-btn{
+    margin-bottom: 30px;
+}
+
+.scan-qr-code{
+    width: 100%;
+    text-align: center;
+    overflow: hidden;
+    position: relative;
+}
+.scan-qr-code img{
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
+}
+#scan_login .scan-qr-code span,.id_scan_login .scan-qr-code span{
+    width: 100%;
+    float: left;
+    font-size: 12px;
+    margin: 30px auto;
+}
+#scan_verify .scan-qr-code span,.id_scan_verify .scan-qr-code span{
+    width: 100%;
+    float: left;
+    font-size: 12px;
+    margin:0 auto 30px auto;
+}
+#scan_verify .scan-qr-code img,.id_scan_verify .scan-qr-code img{
+    margin-bottom: 30px;
+}
+
+
+#scan_mark,#scan_verify_mark,.id_scan_mark,.id_scan_verify_mark{
+    position: absolute;
+    top: 0;
+    margin: 0 0 0 -75px;
+    left: 50%;
+    height: 150px;
+    width: 150px;
+    overflow: hidden;
+    background: url(../img/success.svg) no-repeat center center #fff;
+    background-size: 50%;
+    opacity: .95;
+}
+#scan_time_mark,#scan_verify_time_mark,.id_scan_time_mark,.id_scan_verify_time_mark{
+    position: absolute;
+    top: 0;
+    margin: 0 0 0 -75px;
+    left: 50%;
+    height: 150px;
+    width: 150px;
+    overflow: hidden;
+    background: url(../img/waitfor.png) no-repeat center center #fff;
+    background-size: 50%;
+    opacity: .95;
+}
+.login-box {
+    padding: 68px 0;
+    position: relative;
+}
+.login-logo b {
+    font-size: 27px;
+    line-height: 50px;
+    color: #fff;
+    font-weight: 500;
+}
+.login-box-body, .register-box-body {
+    background-color: unset;
+    padding: 0 66px;
+}
+#tip1 {
+    color: #76A7FF;
+    font-size: 22px;
+    line-height: 24px;
+    text-align: center;
+    display: block;
+}
+.login-logo, .register-logo {
+    margin-bottom: 60px;
+}
+.login-box, .register-box {
+    width: 468px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    margin: 0;
+}
+.inputImg {
+    width: 33px;
+    height: 33px;
+}
+.form-group {
+    display: flex;
+    flex-direction:row;
+    padding: 10px 10px 16px;
+    border-bottom: 1px solid rgba(0, 255, 255, .5);
+}
+.form-control {
+    background-color: unset;
+    border: none;
+    padding: 0 26px;
+    color: #fff;
+}
+input::-webkit-input-placeholder {
+    color: #76A7FF;
+}
+input::-moz-input-placeholder {
+    color: #76A7FF;
+}
+input::-ms-input-placeholder {
+    color: #76A7FF;
+}
+.btn-primary {
+    background-color: #0ff;
+    color: #0b2292;
+    font-weight: 600;
+    font-size: 16px;
+    margin: 36px 0 100px;
+    padding: 14px 0;
+    border-radius: 5px !important;
+}
+.login_saomao {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+.tagBtn {
+    width: 173px;
+    height: 173px;
+}
+.passd_login {
+    color: rgba(89, 245, 242, 1);
+    width: 195px;
+    font-size: 15px;
+    line-height: 34px;
+    text-align: center;
+    display: block;
+    padding-bottom: 34px;
+}

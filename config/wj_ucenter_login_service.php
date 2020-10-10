@@ -17,4 +17,9 @@ return [
         'app_secret'=>env('WJ_UCENTER_LOGIN_SERVICE_APP_SECRET','app_secret'),
     ],
 
+    // 是否开启扫码验证
+    'template' => env('WJ_UCENTER_LOGIN_SERVICE_TEMPLATE','default'),
+
+    // 登陆页面的视图
+    'external_template' => env('WJ_UCENTER_LOGIN_SERVICE_EXTERNAL_TEMPLATE',null),
 ];

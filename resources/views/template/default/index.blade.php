@@ -20,7 +20,7 @@
     <!-- iCheck -->
     <link rel="stylesheet" href="{{ admin_asset("vendor/laravel-admin/AdminLTE/plugins/iCheck/square/blue.css") }}">
 
-    <link rel="stylesheet" href="{{ admin_asset("vendor/weigather/wj_ucenter_login_service/css/scan_login.css") }}">
+    <link rel="stylesheet" href="{{ admin_asset("vendor/weigather/wj_ucenter_login_service/template/default/css/scan_login.css") }}">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -30,7 +30,7 @@
     <![endif]-->
 </head>
 <body class="hold-transition login-page"
-      style="background: url({{ config('wj_ucenter_login_service.login_bg_img')?:admin_asset("vendor/weigather/wj_ucenter_login_service/img/login_bg.jpg") }}) center center no-repeat;background-size: cover;">
+      style="background: url({{ config('wj_ucenter_login_service.login_bg_img')?:admin_asset("vendor/weigather/wj_ucenter_login_service/template/default/img/login_bg.jpg") }}) center center no-repeat;background-size: cover;">
 
 
 <div class="login-box">
@@ -120,12 +120,12 @@
     });
 </script>
 <script>
-    var qrCodeLoading = "{{ admin_asset("vendor/weigather/wj_ucenter_login_service/img/qr_code_loading.gif")}}";
+    var qrCodeLoading = "{{ admin_asset("vendor/weigather/wj_ucenter_login_service/template/default/img/qr_code_loading.gif")}}";
     var passwordLoginUrl = "{{ admin_url('auth/login') }}";
     var csrfToken = "{{ csrf_token() }}";
 
 </script>
-<script src="{{ admin_asset("vendor/weigather/wj_ucenter_login_service/js/scan_login.js")}}"></script>
+<script src="{{ admin_asset("vendor/weigather/wj_ucenter_login_service/template/default/js/scan_login.js")}}"></script>
 <script>
 
     $(function () {
