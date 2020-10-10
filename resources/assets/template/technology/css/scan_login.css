@@ -12,7 +12,7 @@
 .form-group{
 
 }
-.scan-check{
+/*.scan-check{*/
     /*position: absolute;*/
     /*top: 0;*/
     /*right: 0;*/
@@ -21,8 +21,8 @@
     /*overflow: hidden;*/
     /*background: url(../img/check.svg) no-repeat top right;*/
     /*background-size: 100%;*/
-}
-.account-check{
+/*}*/
+/*.account-check{*/
     /*position: absolute;*/
     /*top: 0;*/
     /*right:15px;*/
@@ -31,8 +31,8 @@
     /*line-height: 60px;*/
     /*overflow: hidden;*/
     /*color: #576b95;*/
-}
-.login-check{
+/*}*/
+/*.login-check{*/
     /*position: absolute;*/
     /*top: 0;*/
     /*right:15px;*/
@@ -41,7 +41,7 @@
     /*line-height: 60px;*/
     /*overflow: hidden;*/
     /*color: #576b95;*/
-}
+/*}*/
 .scan-mark{
     width: 100%;
     float: left;
@@ -131,7 +131,7 @@
     width: 468px;
     position: absolute;
     top: 50%;
-    left: 50%;
+    right: 0;
     transform: translate(-50%,-50%);
     margin: 0;
 }
@@ -177,6 +177,7 @@ input::-ms-input-placeholder {
 .tagBtn {
     width: 173px;
     height: 173px;
+    cursor: pointer;
 }
 .passd_login {
     color: rgba(89, 245, 242, 1);
@@ -185,5 +186,6 @@ input::-ms-input-placeholder {
     line-height: 34px;
     text-align: center;
     display: block;
+    cursor: pointer;
     padding-bottom: 34px;
 }

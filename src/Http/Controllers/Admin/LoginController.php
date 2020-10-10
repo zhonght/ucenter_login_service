@@ -28,9 +28,9 @@ class LoginController extends Controller
         }
         $externalTemplate = config('wj_ucenter_login_service.external_template');
         if(!is_null($externalTemplate)){
-            return $externalTemplate;
+            return  view($externalTemplate);
         }
-        return view('wj_ucenter_login_service::template.'.config('wj_ucenter_login_service.external_template').'.index');
+        return view('wj_ucenter_login_service::template.'.config('wj_ucenter_login_service.template').'.index');
     }
 
     /**

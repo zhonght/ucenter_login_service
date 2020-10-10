@@ -20,7 +20,7 @@
     <!-- iCheck -->
     <link rel="stylesheet" href="{{ admin_asset("vendor/laravel-admin/AdminLTE/plugins/iCheck/square/blue.css") }}">
 
-    <link rel="stylesheet" href="{{ admin_asset("vendor/weigather/wj_ucenter_login_service/template/generous/css/scan_login.css") }}">
+    <link rel="stylesheet" href="{{ admin_asset("vendor/weigather/wj_ucenter_login_service/template/".config('wj_ucenter_login_service.template')."/css/scan_login.css") }}">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -30,23 +30,24 @@
     <![endif]-->
 </head>
 <body class="hold-transition login-page"
-      style="background: url({{ config('wj_ucenter_login_service.login_bg_img')?:admin_asset("vendor/weigather/wj_ucenter_login_service/template/generous/img/login_bg.jpg") }}) center center no-repeat;background-size: cover;">
+      style="background: url({{ config('wj_ucenter_login_service.login_bg_img')?:admin_asset("vendor/weigather/wj_ucenter_login_service/template/".config('wj_ucenter_login_service.template')."/img/bg.png") }}) center center no-repeat;background-size: cover;">
 
 
-<div class="login-box" style="background: url({{admin_asset("vendor/weigather/wj_ucenter_login_service/template/generous/img/kuang_b@2x.png")}}) center center no-repeat;background-size: 100% 100%;">
+<div class="login-box" >
     <div class="login-logo">
+        <img src="{{admin_asset("vendor/weigather/wj_ucenter_login_service/template/".config('wj_ucenter_login_service.template')."/img/logo@2x.png")}}" alt="" class="logo">
         <a href="{{ admin_url('/') }}"><b>{{config('admin.name')}}</b></a>
     </div>
 
     <div class="login-box-body twoactive" id="account_login" style="display: none">
         <form action="{{ admin_url('auth/login') }}" method="post" id="password_login_form">
             <div class="form-group has-feedback">
-                <img src="{{admin_asset("vendor/weigather/wj_ucenter_login_service/template/generous/img/personal_icon@2x.png")}}" alt="" class="inputImg">
+                <div class="inputImg">账号</div>
                 <input type="text" id="password_login_username" class="form-control"
                        placeholder="{{ trans('admin.username') }}" name="username">
             </div>
             <div class="form-group has-feedback">
-                <img src="{{admin_asset("vendor/weigather/wj_ucenter_login_service/template/generous/img/password_icon_bright@2x.png")}}" alt="" class="inputImg">
+                <div class="inputImg">密码</div>
                 <input type="password" id="password_login_password" class="form-control"
                        placeholder="{{ trans('admin.password') }}" name="password">
             </div>
@@ -95,7 +96,7 @@
     <div class="login_saomao">
         <div class="passd_login account-check" >使用账号登录</div>
         <div class="passd_login login-check" >重新登陆</div>
-        <img src="{{admin_asset("vendor/weigather/wj_ucenter_login_service/template/generous/img/scan-check.png")}}" alt="" class="tagBtn scan-check" style="display: none;" >
+        <div class="passd_login scan-check" >扫码登录</div>
     </div>
 
     <!-- 全部使用admin_token登陆 -->
@@ -123,12 +124,12 @@
     });
 </script>
 <script>
-    var qrCodeLoading = "{{ admin_asset("vendor/weigather/wj_ucenter_login_service/template/generous/img/loading.gif")}}";
+    var qrCodeLoading = "{{ admin_asset("vendor/weigather/wj_ucenter_login_service/template/".config('wj_ucenter_login_service.template')."/img/loading.gif")}}";
     var passwordLoginUrl = "{{ admin_url('auth/login') }}";
     var csrfToken = "{{ csrf_token() }}";
 
 </script>
-<script src="{{ admin_asset("vendor/weigather/wj_ucenter_login_service/template/generous/js/scan_login.js")}}"></script>
+<script src="{{ admin_asset("vendor/weigather/wj_ucenter_login_service/template/".config('wj_ucenter_login_service.template')."/js/scan_login.js")}}"></script>
 <script>
 
     $(function () {
