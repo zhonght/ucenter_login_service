@@ -34,3 +34,21 @@ if (!function_exists('wj_ucenter_login_service_resource_url')) {
         return $url;
     }
 }
+
+if (!function_exists('get_wj_ucenter_login_service_version')) {
+    function get_wj_ucenter_login_service_version()
+    {
+        if(class_exists(\Encore\Admin\Admin::class)){
+            $version = \Encore\Admin\Admin::VERSION;
+            $intVersion = intval(str_replace('.','',$version));
+            if($intVersion<= 160){
+                return 2;
+            }else if($intVersion<=180){
+                return 3;
+            }else{
+                return 1;
+            }
+        }
+        return 0;
+    }
+}

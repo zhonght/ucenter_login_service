@@ -1,4 +1,4 @@
-<div class="login-box">
+<div class="login-box" id="grid-modal-{{$key}}-scan_bind_code">
     <div class="login-box-body id_scan_login">
         <div class="scan-qr-code">
             <div class="scan-mark">
@@ -14,8 +14,13 @@
 </div>
 <script>
     var csrfToken="{{csrf_token()}}";
-    var qrCodeLoading="{{admin_asset("vendor/laravel-admin-ext/wj_scan_login/img/qr_code_loading.gif")}}";
+    var qrCodeLoading="{{admin_asset("vendor/weigather/wj_ucenter_login_service/img/qr_code_loading.gif")}}";
     $(function(){
         getLoginQrCode('{{$key}}');
     });
 </script>
+<style>
+    td.column-scan_bind_code span.grid-expand i{
+        display: none;
+    }
+</style>

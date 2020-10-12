@@ -67,6 +67,7 @@
     float: left;
     font-size: 12px;
     margin: 30px auto;
+    color: #999;
 }
 #scan_verify .scan-qr-code span,.id_scan_verify .scan-qr-code span{
     width: 100%;
