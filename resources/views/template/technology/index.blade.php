@@ -3,22 +3,22 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>{{config('admin.title')}} | {{ trans('admin.login') }}</title>
+    <title>{{config('admin.title')}} | 登陆</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
-    @if(!is_null($favicon = Admin::favicon()))
+    @if( get_wj_ucenter_login_service_version() >=1 && !is_null($favicon = Admin::favicon()))
         <link rel="shortcut icon" href="{{$favicon}}">
 @endif
 
 <!-- Bootstrap 3.3.5 -->
-    <link rel="stylesheet" href="{{ admin_asset("vendor/laravel-admin/AdminLTE/bootstrap/css/bootstrap.min.css") }}">
+    <link rel="stylesheet" href="{{ admin_asset("{$assetUrl}/AdminLTE/bootstrap/css/bootstrap.min.css") }}">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="{{ admin_asset("vendor/laravel-admin/font-awesome/css/font-awesome.min.css") }}">
+    <link rel="stylesheet" href="{{ admin_asset("{$assetUrl}/font-awesome/css/font-awesome.min.css") }}">
     <!-- Theme style -->
-    <link rel="stylesheet" href="{{ admin_asset("vendor/laravel-admin/AdminLTE/dist/css/AdminLTE.min.css") }}">
+    <link rel="stylesheet" href="{{ admin_asset("{$assetUrl}/AdminLTE/dist/css/AdminLTE.min.css") }}">
     <!-- iCheck -->
-    <link rel="stylesheet" href="{{ admin_asset("vendor/laravel-admin/AdminLTE/plugins/iCheck/square/blue.css") }}">
+    <link rel="stylesheet" href="{{ admin_asset("{$assetUrl}/AdminLTE/plugins/iCheck/square/blue.css") }}">
 
     <link rel="stylesheet" href="{{ admin_asset("vendor/weigather/wj_ucenter_login_service/template/".config('wj_ucenter_login_service.template')."/css/scan_login.css") }}">
 
@@ -43,19 +43,19 @@
             <div class="form-group has-feedback">
                 <img src="{{admin_asset("vendor/weigather/wj_ucenter_login_service/template/".config('wj_ucenter_login_service.template')."/img/personal_icon@2x.png")}}" alt="" class="inputImg">
                 <input type="text" id="password_login_username" class="form-control"
-                       placeholder="{{ trans('admin.username') }}" name="username">
+                       placeholder="账号" name="username">
             </div>
             <div class="form-group has-feedback">
                 <img src="{{admin_asset("vendor/weigather/wj_ucenter_login_service/template/".config('wj_ucenter_login_service.template')."/img/password_icon_bright@2x.png")}}" alt="" class="inputImg">
                 <input type="password" id="password_login_password" class="form-control"
-                       placeholder="{{ trans('admin.password') }}" name="password">
+                       placeholder="密码" name="password">
             </div>
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
             <div class="row">
                 <div class="col-xs-12">
                     <button type="button"
-                            class="scan-password-btn btn btn-primary btn-block btn-flat">{{ trans('admin.login') }}</button>
+                            class="scan-password-btn btn btn-primary btn-block btn-flat">登陆</button>
                 </div>
             </div>
         </form>
@@ -108,11 +108,11 @@
 <!-- /.login-box -->
 
 <!-- jQuery 2.1.4 -->
-<script src="{{ admin_asset("vendor/laravel-admin/AdminLTE/plugins/jQuery/jQuery-2.1.4.min.js")}} "></script>
+<script src="{{ admin_asset("{$assetUrl}/AdminLTE/plugins/jQuery/jQuery-2.1.4.min.js")}} "></script>
 <!-- Bootstrap 3.3.5 -->
-<script src="{{ admin_asset("vendor/laravel-admin/AdminLTE/bootstrap/js/bootstrap.min.js")}}"></script>
+<script src="{{ admin_asset("{$assetUrl}/AdminLTE/bootstrap/js/bootstrap.min.js")}}"></script>
 <!-- iCheck -->
-<script src="{{ admin_asset("vendor/laravel-admin/AdminLTE/plugins/iCheck/icheck.min.js")}}"></script>
+<script src="{{ admin_asset("{$assetUrl}/AdminLTE/plugins/iCheck/icheck.min.js")}}"></script>
 <script>
     $(function () {
         $('input').iCheck({

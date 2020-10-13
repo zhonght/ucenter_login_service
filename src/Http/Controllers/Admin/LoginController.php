@@ -26,11 +26,12 @@ class LoginController extends Controller
         if ($this->guard()->check()) {
             return redirect($this->redirectPath());
         }
+        $assetUrl = get_wj_ucenter_login_service_version() <= 1 ? '/packages/admin' : 'vendor/laravel-admin';
         $externalTemplate = config('wj_ucenter_login_service.external_template');
-        if(!is_null($externalTemplate)){
-            return  view($externalTemplate);
+        if (!is_null($externalTemplate)) {
+            return view($externalTemplate, compact('assetUrl'));
         }
-        return view('wj_ucenter_login_service::template.'.config('wj_ucenter_login_service.template').'.index');
+        return view('wj_ucenter_login_service::template.' . config('wj_ucenter_login_service.template') . '.index', compact('assetUrl'));
     }
 
     /**
@@ -51,7 +52,11 @@ class LoginController extends Controller
             }
             $adminUser = decrypt($request->admin_token);
             if ($this->guard()->loginUsingId($adminUser['id'])) {
-                return $this->sendLoginResponse($request);
+                if (get_wj_ucenter_login_service_version() <= 1) {
+                    return $this->sendLoginResponse($request);
+                } else {
+                    return redirect()->intended(config('admin.prefix'));
+                }
             }
             return back()->withInput()->withErrors([
                 'username' => $this->getFailedLoginMessage(),
@@ -72,11 +77,18 @@ class LoginController extends Controller
                         'token' => encrypt(['type' => 'create_qr_code', 'id' => $adminModel->id, 'time' => time()]),
                         'is_verify' => AdminScanBind::where('admin_id', $adminModel->id)->count() > 0,
                     ]);
-                }else{
-                    if ($this->guard()->loginUsingId($adminModel->id)) {
-                        admin_toastr(trans('admin.login_successful'));
-                        $request->session()->regenerate();
-                        return wj_ucenter_login_service_return('00', [url($this->redirectPath())],'登陆成功');
+                } else {
+                    if (get_wj_ucenter_login_service_version() <= 1) {
+                        if ($this->guard()->attempt($credentials)) {
+                            admin_toastr(trans('admin::lang.login_successful'));
+                            return wj_ucenter_login_service_return('00', [url($this->redirectPath())], '登陆成功');
+                        }
+                    } else {
+                        if ($this->guard()->loginUsingId($adminModel->id)) {
+                            admin_toastr(trans('admin.login_successful'));
+                            $request->session()->regenerate();
+                            return wj_ucenter_login_service_return('00', [url($this->redirectPath())], '登陆成功');
+                        }
                     }
                 }
             }
@@ -92,7 +104,9 @@ class LoginController extends Controller
     protected function sendLoginResponse(Request $request)
     {
         admin_toastr(trans('admin.login_successful'));
-        $request->session()->regenerate();
+        if (get_wj_ucenter_login_service_version() >= 1) {
+            $request->session()->regenerate();
+        }
         return redirect()->intended($this->redirectPath());
     }
 
@@ -116,7 +130,7 @@ class LoginController extends Controller
         if (method_exists($this, 'redirectTo')) {
             return $this->redirectTo();
         }
-        return property_exists($this, 'redirectTo') ? $this->redirectTo : config('admin.route.prefix');
+        return property_exists($this, 'redirectTo') ? $this->redirectTo : get_wj_ucenter_login_service_version() >= 1?config('admin.route.prefix'):config('admin.prefix');
     }
 
     /**

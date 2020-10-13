@@ -39,7 +39,7 @@ if (!function_exists('get_wj_ucenter_login_service_version')) {
     function get_wj_ucenter_login_service_version()
     {
         if(class_exists(\Encore\Admin\Admin::class)){
-            $version = \Encore\Admin\Admin::VERSION;
+            $version = defined(\Encore\Admin\Admin::VERSION )? \Encore\Admin\Admin::VERSION: 0;
             $intVersion = intval(str_replace('.','',$version));
             if($intVersion<= 160){
                 return 2;
@@ -50,5 +50,19 @@ if (!function_exists('get_wj_ucenter_login_service_version')) {
             }
         }
         return 0;
+    }
+}
+
+
+if (!function_exists('admin_asset') && get_wj_ucenter_login_service_version()<=1) {
+
+    /**
+     * @param $path
+     *
+     * @return string
+     */
+    function admin_asset($path)
+    {
+        return (config('admin.https') || config('admin.secure')) ? secure_asset($path) : asset($path);
     }
 }

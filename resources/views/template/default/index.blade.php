@@ -3,24 +3,25 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>{{config('admin.title')}} | {{ trans('admin.login') }}</title>
+    <title>{{config('admin.title')}} | 登陆 </title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
-    @if(!is_null($favicon = Admin::favicon()))
+    @if( get_wj_ucenter_login_service_version() >=1 && !is_null($favicon = Admin::favicon()))
         <link rel="shortcut icon" href="{{$favicon}}">
 @endif
 
 <!-- Bootstrap 3.3.5 -->
-    <link rel="stylesheet" href="{{ admin_asset("vendor/laravel-admin/AdminLTE/bootstrap/css/bootstrap.min.css") }}">
+    <link rel="stylesheet" href="{{ admin_asset("{$assetUrl}/AdminLTE/bootstrap/css/bootstrap.min.css") }}">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="{{ admin_asset("vendor/laravel-admin/font-awesome/css/font-awesome.min.css") }}">
+    <link rel="stylesheet" href="{{ admin_asset("{$assetUrl}/font-awesome/css/font-awesome.min.css") }}">
     <!-- Theme style -->
-    <link rel="stylesheet" href="{{ admin_asset("vendor/laravel-admin/AdminLTE/dist/css/AdminLTE.min.css") }}">
+    <link rel="stylesheet" href="{{ admin_asset("{$assetUrl}/AdminLTE/dist/css/AdminLTE.min.css") }}">
     <!-- iCheck -->
-    <link rel="stylesheet" href="{{ admin_asset("vendor/laravel-admin/AdminLTE/plugins/iCheck/square/blue.css") }}">
+    <link rel="stylesheet" href="{{ admin_asset("{$assetUrl}/AdminLTE/plugins/iCheck/square/blue.css") }}">
 
-    <link rel="stylesheet" href="{{ admin_asset("vendor/weigather/wj_ucenter_login_service/template/default/css/scan_login.css") }}">
+    <link rel="stylesheet"
+          href="{{ admin_asset("vendor/weigather/wj_ucenter_login_service/template/default/css/scan_login.css") }}">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -41,22 +42,22 @@
 
     <div class="login-box-body" id="account_login" style="display: none">
         <a href="javascript:;" class="scan-check"></a>
-        <p class="login-box-msg">{{ trans('admin.login') }}</p>
+        <p class="login-box-msg">登陆</p>
         <form action="{{ admin_url('auth/login') }}" method="post" id="password_login_form">
             <div class="form-group has-feedback">
                 <input type="text" id="password_login_username" class="form-control"
-                       placeholder="{{ trans('admin.username') }}" name="username">
+                       placeholder="账号" name="username">
             </div>
             <div class="form-group has-feedback">
                 <input type="password" id="password_login_password" class="form-control"
-                       placeholder="{{ trans('admin.password') }}" name="password">
+                       placeholder="密码" name="password">
             </div>
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
             <div class="row">
                 <div class="col-xs-12">
                     <button type="button"
-                            class="scan-password-btn btn btn-primary btn-block btn-flat">{{ trans('admin.login') }}</button>
+                            class="scan-password-btn btn btn-primary btn-block btn-flat">登陆</button>
                 </div>
             </div>
         </form>
@@ -75,14 +76,16 @@
                 <img src="" id="scan_verify_qr_code">
             </div>
             <span id="scan_verify_tip1">请联系账号管理员扫码验证登录</span>
-            <span id="scan_verify_tip2" style="display:none;">已扫码<br><br><a class="refresh_verify_qrcode">重新扫描</a></span>
-            <span id="scan_verify_tip3" style="display:none;">二维码已过期<br><br><a class="refresh_verify_qrcode">重新扫描</a></span>
+            <span id="scan_verify_tip2" style="display:none;">已扫码<br><br><a
+                        class="refresh_verify_qrcode">重新扫描</a></span>
+            <span id="scan_verify_tip3" style="display:none;">二维码已过期<br><br><a
+                        class="refresh_verify_qrcode">重新扫描</a></span>
         </div>
     </div>
 
     <div class="login-box-body" id="scan_login" style="display: none">
         <a href="javascript:;" class="account-check">使用帐号登录</a>
-        <p class="login-box-msg">{{ trans('admin.login') }}</p>
+        <p class="login-box-msg">登陆</p>
         <div class="scan-qr-code">
             <div class="scan-mark">
                 <div id="scan_mark" style="display:none;"></div>
@@ -105,11 +108,11 @@
 <!-- /.login-box -->
 
 <!-- jQuery 2.1.4 -->
-<script src="{{ admin_asset("vendor/laravel-admin/AdminLTE/plugins/jQuery/jQuery-2.1.4.min.js")}} "></script>
+<script src="{{ admin_asset("{$assetUrl}/AdminLTE/plugins/jQuery/jQuery-2.1.4.min.js")}} "></script>
 <!-- Bootstrap 3.3.5 -->
-<script src="{{ admin_asset("vendor/laravel-admin/AdminLTE/bootstrap/js/bootstrap.min.js")}}"></script>
+<script src="{{ admin_asset("{$assetUrl}/AdminLTE/bootstrap/js/bootstrap.min.js")}}"></script>
 <!-- iCheck -->
-<script src="{{ admin_asset("vendor/laravel-admin/AdminLTE/plugins/iCheck/icheck.min.js")}}"></script>
+<script src="{{ admin_asset("{$assetUrl}/AdminLTE/plugins/iCheck/icheck.min.js")}}"></script>
 <script>
     $(function () {
         $('input').iCheck({
