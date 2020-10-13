@@ -38,8 +38,10 @@ if (!function_exists('wj_ucenter_login_service_resource_url')) {
 if (!function_exists('get_wj_ucenter_login_service_version')) {
     function get_wj_ucenter_login_service_version()
     {
-        if(class_exists(\Encore\Admin\Admin::class)){
-            $version = defined(\Encore\Admin\Admin::VERSION )? \Encore\Admin\Admin::VERSION: 0;
+        if(class_exists(\Encore\Admin\Admin::class) &&
+            (new ReflectionClass("\Encore\Admin\Admin"))->hasConstant('VERSION')
+        ){
+            $version = \Encore\Admin\Admin::VERSION;
             $intVersion = intval(str_replace('.','',$version));
             if($intVersion<= 160){
                 return 2;
