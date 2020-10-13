@@ -30,5 +30,9 @@ laravel-admin ucenter_login_service
 	    <td>^2.0</td>
 	    <td>>= 1.8.1</td>
 	  </tr>
+	  <tr>
+	    <td>^3.0</td>
+	    <td>all</td>
+	  </tr>
 	</table>
 </div> 

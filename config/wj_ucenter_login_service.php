@@ -17,9 +17,9 @@ return [
         'app_secret'=>env('WJ_UCENTER_LOGIN_SERVICE_APP_SECRET','app_secret'),
     ],
 
-    // 是否开启扫码验证
+    // 官方模板 default enterprise generous technology
     'template' => env('WJ_UCENTER_LOGIN_SERVICE_TEMPLATE','default'),
 
-    // 登陆页面的视图
+    // 自定义登陆页面的视图
     'external_template' => env('WJ_UCENTER_LOGIN_SERVICE_EXTERNAL_TEMPLATE',null),
 ];

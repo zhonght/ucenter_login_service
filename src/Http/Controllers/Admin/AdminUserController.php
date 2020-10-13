@@ -6,7 +6,6 @@ use Encore\Admin\Grid;
 use Encore\Admin\Widgets\Table;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Controllers\UserController;
-use Weigather\WJUcenterLoginService\Render\BindCode;
 use Weigather\WJUcenterLoginService\Models\AdminScanBind;
 
 /**
@@ -41,10 +40,21 @@ class AdminUserController extends UserController
         $grid->column('name', trans('admin.name'));
         $grid->column('roles', trans('admin.roles'))->pluck('name')->label();
 
-
-        $grid->column('scan_bind_code', '扫码绑定')->display(function () {
-            return "点击生成二维码";
-        })->modal( "绑定二维码",BindCode::class);
+        if(get_wj_ucenter_login_service_version()==3){
+            $grid->column('scan_bind_code', '扫码绑定')->display(function () {
+                return "点击生成二维码";
+            })->modal( "绑定二维码",Weigather\WJUcenterLoginService\Render\BindCode::class);
+        }else if(get_wj_ucenter_login_service_version()==2){
+            $grid->column('scan_bind_code', '扫码绑定')->display(function () {
+                return "<span onclick='getLoginQrCode(\"{$this->id}\");'>点击生成二维码</span>";
+            })->modal( "绑定二维码",function($model){
+                $key = $this->id;
+                $adminUser = $model->find($key);
+                $csrfToken = csrf_token();
+                $qrCodeLoading = admin_asset("vendor/weigather/wj_ucenter_login_service/img/qr_code_loading.gif");
+                return view('wj_ucenter_login_service::bind',compact('key','adminUser','csrfToken','qrCodeLoading'));
+            });
+        }
 
 
         $grid->column('scan_bind_list', '绑定列表')->display(function () {
