@@ -44,11 +44,11 @@ if (!function_exists('get_wj_ucenter_login_service_version')) {
             $version = \Encore\Admin\Admin::VERSION;
             $intVersion = intval(str_replace('.','',$version));
             if($intVersion<= 160){
-                return 2;
-            }else if($intVersion<=180){
-                return 3;
-            }else{
                 return 1;
+            }else if($intVersion<=180){
+                return 2;
+            }else{
+                return 3;
             }
         }
         return 0;
