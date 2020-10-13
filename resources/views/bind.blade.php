@@ -14,20 +14,20 @@
         </div>
     </div>
 </div>
+
+<style>
+    td.column-scan_bind_code span.grid-expand i {
+        display: none;
+    }
+</style>
 <script>
     var csrfToken = "{{csrf_token()}}";
     var qrCodeLoading = "{{admin_asset("vendor/weigather/wj_ucenter_login_service/img/qr_code_loading.gif")}}";
 </script>
-@if(get_wj_ucenter_login_service_version()==3)
+@if(in_array(get_wj_ucenter_login_service_version(),[0,1,3]))
     <script>
         $(function () {
             getLoginQrCode('{{$key}}');
         });
     </script>
-@elseif(get_wj_ucenter_login_service_version()==2)
-    <style>
-        td.column-scan_bind_code span.grid-expand i {
-            display: none;
-        }
-    </style>
 @endif
