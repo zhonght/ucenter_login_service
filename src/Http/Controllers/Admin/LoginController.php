@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Validator;
 use Weigather\WJUcenterLoginService\Models\AdminScanBind;
+use Illuminate\Support\Facades\Redis;
 
 /**
  * 重写的登陆逻辑
