@@ -9,7 +9,7 @@ use Encore\Admin\Auth\Database\Administrator;
 use Weigather\WJUcenterLoginService\Models\AdminScanLog;
 use Weigather\WJUcenterLoginService\Models\AdminScanBind;
 use Weigather\WJUcenterLoginService\SDK\ServiceUserCenter;
-
+use Illuminate\Support\Facades\Redis;
 /**
  * 提供给用户中心接口的控制器
  * Class ApiController
