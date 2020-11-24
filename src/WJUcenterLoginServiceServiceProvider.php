@@ -32,6 +32,8 @@ class WJUcenterLoginServiceServiceProvider extends BaseServiceProvider
 
         // 如果开了扫码登陆
         if (config('wj_ucenter_login_service.scan_enable')) {
+            config(['admin.auth.excepts'=>array_merge(config('admin.auth.excepts'),['auth/item_login'])]);
+            
             AliasLoader::getInstance()->alias('QrCode', QrCode::class);
             Admin::css([
 //                admin_asset("vendor/weigather/wj_ucenter_login_service/css/scan_login.css"),

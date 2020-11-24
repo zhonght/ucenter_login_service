@@ -165,15 +165,49 @@ class ApiController extends Controller
     public function users(Request $request)
     {
         $this->checkData($request, 'users');
-        return wj_ucenter_login_service_return('200', AdminScanBind::where('user_token', $request->user_token)->get()->map(function ($map) {
-            $admin = Administrator::find($map->admin_id);
-            return [
-                'nickname' => $admin->name,
-                'username' => $admin->username,
-                'avatar' => wj_ucenter_login_service_resource_url($admin->avatar),
-                'token' => encrypt(['id' => $admin->id, 'type' => 'login_token', 'time' => time()]),
-            ];
-        }));
+
+        // 判断是否总码登陆
+        $if_item_scan = false;
+        if(isset($request->extend) && $request->extend){
+            $extend = json_decode($request->extend,true);
+            if($extend['if_item_scan'] === true){
+                $if_item_scan = true;
+            }
+        }
+
+        if($if_item_scan === true){
+            $configList = \App\Models\Config::getList();
+            $item_id = $configList['default_terscan_adminid'];
+            $item_id = $item_id ? explode(',', $item_id) : [];
+            $admin_id = AdminScanBind::where('user_token', $request->user_token)->pluck('id')->toArray();
+            $admin_id = $admin_id ?? [];
+            $where_id = array_merge($item_id,$admin_id);
+            $where_id = $where_id ?? [0];
+
+            $admin = Administrator::whereIn('id',$where_id)->get()->map(function($map){
+                $token = encrypt(['id' => $map->id, 'type' => 'login_token', 'time' => time() ,'name'=>$map->name]);
+                Redis::setex('item_'.$map->name,60,$token);
+                return [
+                    'nickname' => $map->name,
+                    'username' => $map->username,
+                    'avatar' => wj_ucenter_login_service_resource_url($map->avatar),
+                    'token' => $token,
+                    'extend' => ['item_url'=>admin_url('auth/item_login').'?admin_token='.$token],
+                ];
+            });
+            $admin = $admin->toArray();
+            return wj_ucenter_login_service_return('200',$admin);
+        }else{
+            return wj_ucenter_login_service_return('200', AdminScanBind::where('user_token', $request->user_token)->get()->map(function ($map) {
+                $admin = Administrator::find($map->admin_id);
+                return [
+                    'nickname' => $admin->name,
+                    'username' => $admin->username,
+                    'avatar' => wj_ucenter_login_service_resource_url($admin->avatar),
+                    'token' => encrypt(['id' => $admin->id, 'type' => 'login_token', 'time' => time()]),
+                ];
+            }));
+        }
     }
 
 

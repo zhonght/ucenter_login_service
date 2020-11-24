@@ -141,4 +141,39 @@ class LoginController extends Controller
     {
         return Auth::guard('admin');
     }
+
+    /**
+     * 总码登陆逻辑
+    */
+    public function itemLogin(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'admin_token' => 'nullable'
+        ]);
+        if (isset($request->admin_token)) {
+            
+            if ($validator->fails()) {
+                return wj_ucenter_login_service_return('500', [], '验证失败');
+            }
+            $adminUser = decrypt($request->admin_token);
+            // 判断总码是否被登陆过 获取过期
+            if(Redis::exists('item_'.$adminUser['name']) == false){
+                return wj_ucenter_login_service_return('500', [], 'Token已过期');
+            }
+            $admin_token = Redis::get('item_'.$adminUser['name']);
+
+            if($admin_token != $request->admin_token){
+                return wj_ucenter_login_service_return('500', [], 'Token无效');
+            }
+
+            if ($this->guard()->loginUsingId($adminUser['id'])) {
+                Redis::del('item_'.$adminUser['name']);
+                return $this->sendLoginResponse($request);
+            }
+            return wj_ucenter_login_service_return('500', [], 'Token无效');
+        }else{
+            return wj_ucenter_login_service_return('500', [], 'Token无效');
+            // return redirect(admin_url('auth/login'))->with('message',array('code'=>'200','type'=>'error','content'=>''));
+        }
+    }
 }
