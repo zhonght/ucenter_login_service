@@ -105,7 +105,7 @@ class AdminUserController extends UserController
      *
      * @return Form
      */
-    public function form()
+    public function scanForm()
     {
         dd(123);exit;
         $item_admin_id = Request::input('item_admin_id');
@@ -154,5 +154,13 @@ class AdminUserController extends UserController
             }
         });
         return $form;
+    }
+
+    public function edit($id, Content $content)
+    {
+        return $content
+            ->title($this->title())
+            ->description($this->description['edit'] ?? trans('admin.edit'))
+            ->body($this->scanForm());
     }
 }
