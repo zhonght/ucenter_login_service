@@ -41,6 +41,8 @@ class AdminUserLowController extends UserController
     {
 
         return Administrator::grid(function (Grid $grid) {
+            $userName = config('admin.database.users_table');
+            $grid->model()->join('admin_item as t2','t2.admin_id',$userName.'id')->select($userName.'.*','t2.status as item_admin_id');
             $grid->id('ID')->sortable();
             $grid->username(trans('admin::lang.username'));
             $grid->name(trans('admin::lang.name'));
@@ -53,6 +55,8 @@ class AdminUserLowController extends UserController
             $grid->scan_bind_list('绑定列表')->display(function () {
                 return "<a  target='_blank' href='" . admin_url('wj_scan/list/' . $this->id) . "'>【" . AdminScanBind::where('admin_id', $this->id)->count() . "】点击查看</a>";
             });
+
+            $grid->column('item_admin_id','总码登陆')->switch(['1','0']);
 
             $grid->created_at(trans('admin::lang.created_at'));
             $grid->updated_at(trans('admin::lang.updated_at'));
@@ -199,7 +203,7 @@ class AdminUserLowController extends UserController
             $id = $form->model()->id;
             $count = Db::table('admin_item')->where('admin_id',$id)->delete();
             if($item_admin_id == 'on'){
-                Db::table('admin_item')->insert(['admin_id'=>$id]);
+                Db::table('admin_item')->insert(['admin_id'=>$id,'status'=>1]);
             }
         });
         return $form;

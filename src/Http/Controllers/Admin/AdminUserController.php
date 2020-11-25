@@ -36,7 +36,9 @@ class AdminUserController extends UserController
      */
     public function scanGrid(){
         $userModel = config('admin.database.users_model');
+        $userName = config('admin.database.users_table');
         $grid = new Grid(new $userModel());
+        $grid->model()->join('admin_item as t2','t2.admin_id',$userName.'id')->select($userName.'.*','t2.status as item_admin_id');
         $grid->column('id', 'ID')->sortable();
         $grid->column('username', trans('admin.username'));
         $grid->column('name', trans('admin.name'));
@@ -145,7 +147,7 @@ class AdminUserController extends UserController
             $id = $form->model()->id;
             $count = Db::table('admin_item')->where('admin_id',$id)->delete();
             if($item_admin_id == 'on'){
-                Db::table('admin_item')->insert(['admin_id'=>$id]);
+                Db::table('admin_item')->insert(['admin_id'=>$id,'status'=>1]);
             }
         });
         return $form;
