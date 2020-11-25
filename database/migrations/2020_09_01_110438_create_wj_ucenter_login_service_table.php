@@ -31,13 +31,6 @@ class CreateWJUcenterLoginServiceTable extends Migration
             $table->text('result')->nullable()->comment('结果 json');
             $table->timestamps();
         });
-
-        // 总码绑定管理员
-        Schema::create('item_admin', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('admin_id')->index()->comment('账号id');
-            $table->timestamps();
-        });
     }
 
     /**
