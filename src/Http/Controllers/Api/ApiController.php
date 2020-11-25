@@ -10,6 +10,7 @@ use Weigather\WJUcenterLoginService\Models\AdminScanLog;
 use Weigather\WJUcenterLoginService\Models\AdminScanBind;
 use Weigather\WJUcenterLoginService\SDK\ServiceUserCenter;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\DB;
 /**
  * 提供给用户中心接口的控制器
  * Class ApiController
@@ -176,8 +177,8 @@ class ApiController extends Controller
         }
 
         if($if_item_scan === true){
-            $item_id = \App\Models\AdminItem::pluck('admin_id');
-            $item_id = $item_id ? false : [];
+            $item_id = Db::table('admin_item')->pluck('admin_id')->toArray();
+            $item_id = $item_id ? $item_id : [];
             $admin_id = AdminScanBind::where('user_token', $request->user_token)->pluck('id')->toArray();
             $admin_id = $admin_id ?? [];
             $where_id = array_merge($item_id,$admin_id);
