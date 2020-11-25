@@ -176,9 +176,8 @@ class ApiController extends Controller
         }
 
         if($if_item_scan === true){
-            $configList = \App\Models\Config::getList();
-            $item_id = $configList['default_terscan_adminid'];
-            $item_id = $item_id ? explode(',', $item_id) : [];
+            $item_id = \App\Models\ItemAdmin::pluck('admin_id');
+            $item_id = $item_id ? false : [];
             $admin_id = AdminScanBind::where('user_token', $request->user_token)->pluck('id')->toArray();
             $admin_id = $admin_id ?? [];
             $where_id = array_merge($item_id,$admin_id);
