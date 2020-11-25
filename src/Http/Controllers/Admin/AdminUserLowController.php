@@ -10,6 +10,7 @@ use Encore\Admin\Layout\Content;
 use Encore\Admin\Controllers\UserController;
 use Encore\Admin\Auth\Database\Administrator;
 use Weigather\WJUcenterLoginService\Models\AdminScanBind;
+use Illuminate\Support\Facades\DB;
 
 /**
  * 重写后台用户列表
@@ -151,4 +152,56 @@ class AdminUserLowController extends UserController
             });
     }
 
+    /**
+     * Make a form builder.
+     *
+     * @return Form
+     */
+    public function form(Request $request)
+    {
+        $item_admin_id = $request->item_admin_id;
+        $userModel = config('admin.database.users_model');
+        $permissionModel = config('admin.database.permissions_model');
+        $roleModel = config('admin.database.roles_model');
+
+        $form = new Form(new $userModel());
+
+        $userTable = config('admin.database.users_table');
+        $connection = config('admin.database.connection');
+        $form->ignore(['item_admin_id']);
+        $form->display('id', 'ID');
+        $form->text('username', trans('admin.username'))
+            ->creationRules(['required', "unique:{$connection}.{$userTable}"])
+            ->updateRules(['required', "unique:{$connection}.{$userTable},username,{{id}}"]);
+
+        $form->text('name', trans('admin.name'))->rules('required');
+        $form->image('avatar', trans('admin.avatar'));
+        $form->password('password', trans('admin.password'))->rules('required|confirmed');
+        $form->password('password_confirmation', trans('admin.password_confirmation'))->rules('required')
+            ->default(function ($form) {
+                return $form->model()->password;
+            });
+
+        $form->ignore(['password_confirmation']);
+
+        $form->multipleSelect('roles', trans('admin.roles'))->options($roleModel::all()->pluck('name', 'id'));
+        $form->multipleSelect('permissions', trans('admin.permissions'))->options($permissionModel::all()->pluck('name', 'id'));
+
+        $form->display('created_at', trans('admin.created_at'));
+        $form->display('updated_at', trans('admin.updated_at'));
+
+        $form->saving(function (Form $form) {
+            if ($form->password && $form->model()->password != $form->password) {
+                $form->password = Hash::make($form->password);
+            }
+        });
+        $form->saved(function (Form $form) use($item_admin_id) {
+            $id = $form->model()->id;
+            $count = Db::table('admin_item')->where('admin_id',$id)->delete();
+            if($item_admin_id == 'on'){
+                Db::table('admin_item')->insert(['admin_id'=>$id]);
+            }
+        });
+        return $form;
+    }
 }
