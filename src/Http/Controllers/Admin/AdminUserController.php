@@ -55,7 +55,7 @@ class AdminUserController extends UserController
                 return view('wj_ucenter_login_service::bind',compact('key','adminUser','csrfToken','qrCodeLoading'));
             });
         }
-
+        
 
         $grid->column('scan_bind_list', '绑定列表')->display(function () {
             return "【".AdminScanBind::where('admin_id',$this->id)->count()."】点击查看";
@@ -75,6 +75,8 @@ class AdminUserController extends UserController
             }
             return new Table(['id', '用户标识', '绑定时间', '操作'],$comments);
         });
+
+        $grid->column('item_admin_id','总码登陆')->switch(['1','0']);
 
         $grid->column('created_at', trans('admin.created_at'));
         $grid->column('updated_at', trans('admin.updated_at'));
