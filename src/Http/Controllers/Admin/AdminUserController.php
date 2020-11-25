@@ -2,6 +2,7 @@
 
 namespace Weigather\WJUcenterLoginService\Http\Controllers\Admin;
 
+use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Widgets\Table;
 use Encore\Admin\Layout\Content;
@@ -105,9 +106,8 @@ class AdminUserController extends UserController
      *
      * @return Form
      */
-    public function scanForm()
+    public function form()
     {
-        dd(123);exit;
         $item_admin_id = Request::input('item_admin_id');
         $userModel = config('admin.database.users_model');
         $permissionModel = config('admin.database.permissions_model');
@@ -136,7 +136,7 @@ class AdminUserController extends UserController
         $form->multipleSelect('roles', trans('admin.roles'))->options($roleModel::all()->pluck('name', 'id'));
         $form->multipleSelect('permissions', trans('admin.permissions'))->options($permissionModel::all()->pluck('name', 'id'));
 
-        $grid->switch('item_admin_id','总码登陆')->states(['1','0'])->default(0);
+        $form->switch('item_admin_id','总码登陆')->states(['1','0'])->default(0);
         $form->display('created_at', trans('admin.created_at'));
         $form->display('updated_at', trans('admin.updated_at'));
 
@@ -154,13 +154,5 @@ class AdminUserController extends UserController
             }
         });
         return $form;
-    }
-
-    public function edit($id, Content $content)
-    {
-        return $content
-            ->title($this->title())
-            ->description($this->description['edit'] ?? trans('admin.edit'))
-            ->body($this->scanForm());
     }
 }
