@@ -42,7 +42,7 @@ class AdminUserLowController extends UserController
 
         return Administrator::grid(function (Grid $grid) {
             $userName = config('admin.database.users_table');
-            $grid->model()->join('admin_item as t2','t2.admin_id',$userName.'id')->select($userName.'.*','t2.status as item_admin_id');
+            $grid->model()->join('admin_item as t2','t2.admin_id',$userName.'.id')->select($userName.'.*','t2.status as item_admin_id');
             $grid->id('ID')->sortable();
             $grid->username(trans('admin::lang.username'));
             $grid->name(trans('admin::lang.name'));

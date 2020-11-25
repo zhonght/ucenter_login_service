@@ -38,7 +38,7 @@ class AdminUserController extends UserController
         $userModel = config('admin.database.users_model');
         $userName = config('admin.database.users_table');
         $grid = new Grid(new $userModel());
-        $grid->model()->join('admin_item as t2','t2.admin_id',$userName.'id')->select($userName.'.*','t2.status as item_admin_id');
+        $grid->model()->join('admin_item as t2','t2.admin_id',$userName.'.id')->select($userName.'.*','t2.status as item_admin_id');
         $grid->column('id', 'ID')->sortable();
         $grid->column('username', trans('admin.username'));
         $grid->column('name', trans('admin.name'));
