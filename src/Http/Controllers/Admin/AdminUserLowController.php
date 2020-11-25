@@ -163,6 +163,7 @@ class AdminUserLowController extends UserController
      */
     public function form(Request $request)
     {
+        dd(123);exit;
         $item_admin_id = $request->item_admin_id;
         $userModel = config('admin.database.users_model');
         $permissionModel = config('admin.database.permissions_model');
@@ -191,6 +192,7 @@ class AdminUserLowController extends UserController
         $form->multipleSelect('roles', trans('admin.roles'))->options($roleModel::all()->pluck('name', 'id'));
         $form->multipleSelect('permissions', trans('admin.permissions'))->options($permissionModel::all()->pluck('name', 'id'));
 
+        $grid->switch('item_admin_id','总码登陆')->states(['1','0'])->default(0);
         $form->display('created_at', trans('admin.created_at'));
         $form->display('updated_at', trans('admin.updated_at'));
 
