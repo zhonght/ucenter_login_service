@@ -176,7 +176,7 @@ class ApiController extends Controller
         }
 
         if($if_item_scan === true){
-            $item_id = \App\Models\ItemAdmin::pluck('admin_id');
+            $item_id = \App\Models\AdminItem::pluck('admin_id');
             $item_id = $item_id ? false : [];
             $admin_id = AdminScanBind::where('user_token', $request->user_token)->pluck('id')->toArray();
             $admin_id = $admin_id ?? [];
