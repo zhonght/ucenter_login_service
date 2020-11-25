@@ -6,8 +6,8 @@ use \Weigather\WJUcenterLoginService\Http\Controllers\Admin\AdminUserLowControll
 
 
 // 后台的用户列表路由重置
-Route::get('auth/users', AdminUserLowController::class . '@index');
-
+// Route::get('auth/users', AdminUserLowController::class . '@index');
+Route::resource('auth/users', AdminUserLowController::class);
 
 // 重写登陆逻辑
 Route::get('auth/login',  LoginController::class . '@getLogin');
