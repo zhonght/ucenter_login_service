@@ -161,7 +161,7 @@ class AdminUserLowController extends UserController
      *
      * @return Form
      */
-    public function form(Request $request)
+    public function scanForm(Request $request)
     {
         dd(123);exit;
         $item_admin_id = $request->item_admin_id;
@@ -209,5 +209,13 @@ class AdminUserLowController extends UserController
             }
         });
         return $form;
+    }
+
+    public function edit($id, Content $content)
+    {
+        return $content
+            ->title($this->title())
+            ->description($this->description['edit'] ?? trans('admin.edit'))
+            ->body($this->scanForm());
     }
 }
