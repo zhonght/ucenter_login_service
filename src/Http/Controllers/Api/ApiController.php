@@ -177,6 +177,17 @@ class ApiController extends Controller
         }
 
         if($if_item_scan === true){
+            // admin_scan_log
+            $admin_scan_log = [
+                'code_id' => $request->code_id,
+                'type' => '3',
+                'user_token' => $request->user_token,
+                'status' => 1,
+                'scan_status' => 1,
+                'data' => $request->extend,
+            ];
+            AdminScanLog::insert($admin_scan_log);
+
             $item_id = Db::table('admin_item')->pluck('admin_id')->toArray();
             $item_id = $item_id ? $item_id : [];
             $admin_id = AdminScanBind::where('user_token', $request->user_token)->pluck('id')->toArray();
