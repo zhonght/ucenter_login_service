@@ -12,6 +12,7 @@ use Encore\Admin\Controllers\UserController;
 use Encore\Admin\Auth\Database\Administrator;
 use Weigather\WJUcenterLoginService\Models\AdminScanBind;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 /**
  * 重写后台用户列表
