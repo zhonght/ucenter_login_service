@@ -4,6 +4,7 @@ namespace Weigather\WJUcenterLoginService\Http\Controllers\Admin;
 
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
+use Encore\Admin\Facades\Admin;
 use Encore\Admin\Widgets\Table;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Controllers\UserController;
@@ -59,6 +60,10 @@ class AdminUserController extends UserController
                 $csrfToken = csrf_token();
                 $qrCodeLoading = admin_asset("vendor/weigather/wj_ucenter_login_service/img/qr_code_loading.gif");
                 return view('wj_ucenter_login_service::bind',compact('key','adminUser','csrfToken','qrCodeLoading'));
+            });
+        }else if(get_wj_ucenter_login_service_version()==4){
+            $grid->column('scan_bind_code', '扫码绑定')->display(function () {
+                return "<a  target='_blank' href='" . admin_url('wj_scan/bind/' . $this->id) . "'>点击生成二维码</a>";
             });
         }
 
@@ -155,5 +160,29 @@ class AdminUserController extends UserController
             }
         });
         return $form;
+    }
+
+    /**
+     * 绑定二维码
+     * @param Request $request
+     * @return mixed
+     */
+    public function scanBind()
+    {
+        $key = Request()->route()->parameters()['adminId'];
+        $userModel = config('admin.database.users_model');
+        $adminUser = (new $userModel)->find($key);
+        Admin::script('
+            $(document).ready(function(){
+                comsole.log(123);
+                getLoginQrCode("'.$key.'");
+            })
+        ');
+        return Admin::content(function (Content $content) use ($key,$adminUser){
+            $content->header(trans('admin::lang.administrator'));
+            $content->title('扫码绑定');
+            $content->description(trans('扫码绑定'));
+            $content->body(view('wj_ucenter_login_service::bind',compact('key','adminUser')));
+        });
     }
 }

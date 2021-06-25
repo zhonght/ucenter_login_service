@@ -4,7 +4,6 @@ namespace Weigather\WJUcenterLoginService\Http\Controllers\Admin;
 
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
-use Encore\Admin\Form;
 use Illuminate\Http\Request;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Layout\Content;
