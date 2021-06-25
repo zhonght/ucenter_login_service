@@ -27,3 +27,6 @@ Route::group([
         $route->post('get_bind',AdminController::class . '@getBindCode');
     });
 });
+
+// v1.8.1-v1.8.10的扫码绑定走这里
+Route::get('wj_scan/bind/{adminId}', AdminUserController::class . '@scanBind');
