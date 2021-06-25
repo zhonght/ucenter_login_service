@@ -82,13 +82,15 @@ class LoginController extends Controller
                     if (get_wj_ucenter_login_service_version() <= 1) {
                         if ($this->guard()->attempt($credentials)) {
                             admin_toastr(trans('admin::lang.login_successful'));
-                            return wj_ucenter_login_service_return('00', [url($this->redirectPath())], '登陆成功');
+                            return wj_ucenter_login_service_return('00', [admin_url()], '登陆成功');
+                            // return wj_ucenter_login_service_return('00', [url($this->redirectPath())], '登陆成功');
                         }
                     } else {
                         if ($this->guard()->loginUsingId($adminModel->id)) {
                             admin_toastr(trans('admin.login_successful'));
                             $request->session()->regenerate();
-                            return wj_ucenter_login_service_return('00', [url($this->redirectPath())], '登陆成功');
+                            return wj_ucenter_login_service_return('00', [admin_url()], '登陆成功');
+                            // return wj_ucenter_login_service_return('00', [url($this->redirectPath())], '登陆成功');
                         }
                     }
                 }
@@ -108,7 +110,8 @@ class LoginController extends Controller
         if (get_wj_ucenter_login_service_version() >= 1) {
             $request->session()->regenerate();
         }
-        return redirect()->intended($this->redirectPath());
+        $admin_url = admin_url();
+        return redirect()->intended($admin_url);
     }
 
     /**
