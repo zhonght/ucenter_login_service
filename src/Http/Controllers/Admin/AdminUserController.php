@@ -175,6 +175,7 @@ class AdminUserController extends UserController
         Admin::script('
             $(document).ready(function(){
                 comsole.log(123);
+                comsole.log(456);
                 getLoginQrCode("'.$key.'");
             })
         ');
