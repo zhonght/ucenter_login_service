@@ -53,11 +53,13 @@ class LoginController extends Controller
             }
             $adminUser = decrypt($request->admin_token);
             if ($this->guard()->loginUsingId($adminUser['id'])) {
-                if (get_wj_ucenter_login_service_version() <= 1) {
-                    return $this->sendLoginResponse($request);
-                } else {
-                    return redirect()->intended(config('admin.prefix'));
-                }
+                //统一返回到admin
+                redirect()->intended('admin');
+                // if (get_wj_ucenter_login_service_version() <= 1) {
+                //     return $this->sendLoginResponse($request);
+                // } else {
+                //     return redirect()->intended(config('admin.prefix'));
+                // }
             }
             return back()->withInput()->withErrors([
                 'username' => $this->getFailedLoginMessage(),
