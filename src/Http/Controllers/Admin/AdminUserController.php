@@ -155,7 +155,7 @@ class AdminUserController extends UserController
         $form->saved(function (Form $form) use($item_admin_id) {
             $id = $form->model()->id;
             $count = Db::table('admin_item')->where('admin_id',$id)->delete();
-            if($item_admin_id == 'on'){
+            if($item_admin_id == 'on' || $item_admin_id == '1'){
                 Db::table('admin_item')->insert(['admin_id'=>$id,'status'=>1]);
             }
         });
