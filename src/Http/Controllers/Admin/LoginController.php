@@ -132,9 +132,9 @@ class LoginController extends Controller
      */
     protected function redirectPath()
     {
-        if (method_exists($this, 'redirectTo')) {
-            return $this->redirectTo();
-        }
+        // if (method_exists($this, 'redirectTo')) {
+        //     return $this->redirectTo();
+        // }
 
         return config('admin.route.prefix');
         // return 'admin';
