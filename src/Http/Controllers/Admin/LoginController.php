@@ -53,8 +53,9 @@ class LoginController extends Controller
             }
             $adminUser = decrypt($request->admin_token);
             if ($this->guard()->loginUsingId($adminUser['id'])) {
+                return $this->sendLoginResponse($request);
                 //统一返回到admin
-                redirect()->intended(config('admin.route.prefix'));
+                // redirect()->intended(config('admin.route.prefix'));
                 // redirect()->intended('admin');
                 // if (get_wj_ucenter_login_service_version() <= 1) {
                 //     return $this->sendLoginResponse($request);
