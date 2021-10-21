@@ -53,15 +53,8 @@ class LoginController extends Controller
             }
             $adminUser = decrypt($request->admin_token);
             if ($this->guard()->loginUsingId($adminUser['id'])) {
+                //统一返回到 config('admin')['route']['prefig']的配置
                 return $this->sendLoginResponse($request);
-                //统一返回到admin
-                // redirect()->intended(config('admin.route.prefix'));
-                // redirect()->intended('admin');
-                // if (get_wj_ucenter_login_service_version() <= 1) {
-                //     return $this->sendLoginResponse($request);
-                // } else {
-                //     return redirect()->intended(config('admin.prefix'));
-                // }
             }
             return back()->withInput()->withErrors([
                 'username' => $this->getFailedLoginMessage(),
@@ -132,13 +125,10 @@ class LoginController extends Controller
      */
     protected function redirectPath()
     {
-        // if (method_exists($this, 'redirectTo')) {
-        //     return $this->redirectTo();
-        // }
-
-        return config('admin.route.prefix');
-        // return 'admin';
-        // return property_exists($this, 'redirectTo') ? $this->redirectTo : get_wj_ucenter_login_service_version() >= 1?config('admin.route.prefix'):config('admin.prefix');
+        if (method_exists($this, 'redirectTo')) {
+            return $this->redirectTo();
+        }
+        return get_wj_ucenter_login_service_version() >= 1?config('admin.route.prefix'):config('admin.prefix');
     }
 
     /**
