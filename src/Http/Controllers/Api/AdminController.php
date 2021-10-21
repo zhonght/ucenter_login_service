@@ -164,7 +164,7 @@ class AdminController extends Controller
             $status = 2;
         } else if ($scanLog->status == 3) {
             $status = 3;
-            $url = url('admin/auth/login');
+            $url = admin_url('auth/login');
             $token = $scanLog->result['admin_token'];
         }
         return wj_ucenter_login_service_return('00', [$status, $url, $token]);
