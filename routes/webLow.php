@@ -13,6 +13,9 @@ Route::resource('auth/users', AdminUserLowController::class);
 Route::get('auth/login',  LoginController::class . '@getLogin');
 Route::post('auth/login',  LoginController::class . '@postLogin');
 
+// 总码登陆逻辑
+Route::get('auth/item_login', LoginController::class. '@itemLogin');
+
 
 Route::get('wj_scan/list/{adminId}', AdminUserLowController::class . '@scanList');
 Route::get('wj_scan/bind/{adminId}', AdminUserLowController::class . '@scanBind');
