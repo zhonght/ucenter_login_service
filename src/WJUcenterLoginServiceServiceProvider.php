@@ -32,7 +32,7 @@ class WJUcenterLoginServiceServiceProvider extends BaseServiceProvider
 
         // 如果开了扫码登陆
         if (config('wj_ucenter_login_service.scan_enable')) {
-            config(['admin.auth.excepts'=>array_merge(config('admin.auth.excepts'),['auth/item_login'])]);
+            // config(['admin.auth.excepts'=>array_merge(config('admin.auth.excepts'),['auth/item_login'])]);
             
             AliasLoader::getInstance()->alias('QrCode', QrCode::class);
             Admin::css([
@@ -40,6 +40,7 @@ class WJUcenterLoginServiceServiceProvider extends BaseServiceProvider
                 admin_asset("vendor/weigather/wj_ucenter_login_service/css/scan_login_admin.css")
             ]);
             if (get_wj_ucenter_login_service_version() >= 2) {
+                config(['admin.auth.excepts'=>array_merge(config('admin.auth.excepts'),['auth/item_login'])]);
                 Admin::js([
                     admin_asset("vendor/weigather/wj_ucenter_login_service/js/scan_bind.js")
                 ]);
