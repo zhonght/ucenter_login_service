@@ -45,6 +45,7 @@ class WJUcenterLoginServiceServiceProvider extends BaseServiceProvider
                     admin_asset("vendor/weigather/wj_ucenter_login_service/js/scan_bind.js")
                 ]);
             } else {
+                app('router')->aliasMiddleware('admin.auth', \Weigather\WJUcenterLoginService\Middleware\RewriteAuthenticate::class);
                 Admin::js([
                     admin_asset("vendor/weigather/wj_ucenter_login_service/js/scan_bind_low.js")
                 ]);
