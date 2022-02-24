@@ -44,7 +44,8 @@ class AdminUserLowController extends UserController
         return Administrator::grid(function (Grid $grid) {
             $userName = config('admin.database.users_table');
             $grid->model()->leftjoin('admin_item as t2','t2.admin_id',$userName.'.id')->select($userName.'.*','t2.status as item_admin_id');
-            $grid->id('ID')->sortable();
+            $grid->model()->orderBy("id","asc");
+            $grid->id("ID");
             $grid->username(trans('admin::lang.username'));
             $grid->name(trans('admin::lang.name'));
             $grid->roles(trans('admin::lang.roles'))->pluck('name')->label();
@@ -174,7 +175,6 @@ class AdminUserLowController extends UserController
     public function scanform()
     {
          return Administrator::form(function (Form $form) {
-//            dd($form);
             $userModel = config('admin.database.users_model');
             $permissionModel = config('admin.database.permissions_model');
             $roleModel = config('admin.database.roles_model');
@@ -188,7 +188,6 @@ class AdminUserLowController extends UserController
 
             $form->text('username', '用户名')
                 ->creationRules(['required', "unique:{$connection}.{$userTable}"]);
-//                ->updateRules(['required', "unique:{$connection}.{$userTable},username,{{id}}"]);
 
             $form->text('name', '名称')->rules('required');
             $form->image('avatar', '头像');
