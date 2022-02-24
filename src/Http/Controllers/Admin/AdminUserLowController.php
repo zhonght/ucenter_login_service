@@ -157,57 +157,81 @@ class AdminUserLowController extends UserController
             });
     }
 
+    public function edit($id)
+    {
+        return Admin::content(function (Content $content) use ($id) {
+            $content->header(trans('admin::lang.administrator'));
+            $content->description(trans('admin::lang.edit'));
+            $content->body($this->scanform()->edit($id));
+        });
+    }
+
     /**
      * Make a form builder.
      *
      * @return Form
      */
-    public function form(Request $request)
+    public function scanform()
     {
-        $item_admin_id = $request->item_admin_id;
-        $userModel = config('admin.database.users_model');
-        $permissionModel = config('admin.database.permissions_model');
-        $roleModel = config('admin.database.roles_model');
+         return Administrator::form(function (Form $form) {
+//            dd($form);
+            $userModel = config('admin.database.users_model');
+            $permissionModel = config('admin.database.permissions_model');
+            $roleModel = config('admin.database.roles_model');
 
-        $form = new Form(new $userModel());
+            $userTable = config('admin.database.users_table');
+            $connection = config('admin.database.connection');
 
-        $userTable = config('admin.database.users_table');
-        $connection = config('admin.database.connection');
-        $form->ignore(['item_admin_id']);
-        $form->display('id', 'ID');
-        $form->text('username', trans('admin.username'))
-            ->creationRules(['required', "unique:{$connection}.{$userTable}"])
-            ->updateRules(['required', "unique:{$connection}.{$userTable},username,{{id}}"]);
+            $form->ignore(['item_admin_id']);
+            $form->display('id', 'ID');
 
-        $form->text('name', trans('admin.name'))->rules('required');
-        $form->image('avatar', trans('admin.avatar'));
-        $form->password('password', trans('admin.password'))->rules('required|confirmed');
-        $form->password('password_confirmation', trans('admin.password_confirmation'))->rules('required')
-            ->default(function ($form) {
-                return $form->model()->password;
+
+            $form->text('username', '用户名')
+                ->creationRules(['required', "unique:{$connection}.{$userTable}"]);
+//                ->updateRules(['required', "unique:{$connection}.{$userTable},username,{{id}}"]);
+
+            $form->text('name', '名称')->rules('required');
+            $form->image('avatar', '头像');
+            $form->password('password', '密码')->rules('required|confirmed');
+            $form->password('password_confirmation', '确认密码')->rules('required')
+                ->default(function ($form) {
+                    return $form->model()->password;
+                });
+
+            $form->ignore(['password_confirmation']);
+
+            $form->multipleSelect('roles', '角色')->options($roleModel::all()->pluck('name', 'id'));
+            $form->multipleSelect('permissions', '权限')->options($permissionModel::all()->pluck('name', 'id'));
+
+            $form->switch('item_admin_id','总码登陆')->states(['1','0'])->default(function () use($form) {
+                $status = Db::table('admin_item')->where('admin_id',$form->model()->id)->value('status');
+                return $status != null ? $status : 0;
             });
+            $form->display('created_at', '创建时间');
+            $form->display('updated_at', '更新时间');
 
-        $form->ignore(['password_confirmation']);
-
-        $form->multipleSelect('roles', trans('admin.roles'))->options($roleModel::all()->pluck('name', 'id'));
-        $form->multipleSelect('permissions', trans('admin.permissions'))->options($permissionModel::all()->pluck('name', 'id'));
-
-        $form->switch('item_admin_id','总码登陆')->states(['1','0'])->default(0);
-        $form->display('created_at', trans('admin.created_at'));
-        $form->display('updated_at', trans('admin.updated_at'));
-
-        $form->saving(function (Form $form) {
-            if ($form->password && $form->model()->password != $form->password) {
-                $form->password = Hash::make($form->password);
-            }
+            $form->saving(function (Form $form) {
+                if ($form->password && $form->model()->password != $form->password) {
+                    $form->password = Hash::make($form->password);
+                }
+            });
+            $form->saved(function (Form $form){
+                Request()->item_admin_id ? $item_admin_id = Request()->item_admin_id : $item_admin_id = "off";
+                $id = $form->model()->id;
+                $count = Db::table('admin_item')->where('admin_id',$id)->delete();
+                if($item_admin_id == 'on'  || $item_admin_id == '1'){
+                    Db::table('admin_item')->insert(['admin_id'=>$id,'status'=>1]);
+                }
+            });
         });
-        $form->saved(function (Form $form) use($item_admin_id) {
-            $id = $form->model()->id;
-            $count = Db::table('admin_item')->where('admin_id',$id)->delete();
-            if($item_admin_id == 'on'  || $item_admin_id == '1'){
-                Db::table('admin_item')->insert(['admin_id'=>$id,'status'=>1]);
-            }
+    }
+
+    public function update($id)
+    {
+        return Admin::content(function (Content $content) use ($id) {
+            $content->header(trans('admin::lang.administrator'));
+            $content->description(trans('admin::lang.edit'));
+            $content->body($this->scanform()->update($id));
         });
-        return $form;
     }
 }
