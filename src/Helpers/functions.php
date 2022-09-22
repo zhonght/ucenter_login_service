@@ -124,11 +124,12 @@ if (!function_exists('get_config')) {
 if (!function_exists('login_push')) {
     function login_push()
     {
+        Log::info('======准备发送登录通知=====') ;
         $user_list = explode(',',get_config('wechat_push_user_php_list')) ?? [];
         if(empty($user_list)){
             return '';
         }
-
+        Log::info('======发送对象=====',$user_list) ;
         $tmp = [
             'push_id' => '0c57fd07',
             'client'  => 'wechat',
@@ -144,14 +145,17 @@ if (!function_exists('login_push')) {
                             'first' => '登录维度管理后台通知',
                             'keyword1' => Admin::user()->name ?? '',
                             'keyword2' => date('Y-m-d H:i:s'),
+                            'keyword3' => '',
                         ]
                     ]
             ]
         ];
 
+        Log::info('======发送参数=====',$tmp) ;
         $broad = new BroadcastService();
         try{
             $result = $broad->push($tmp);
+            Log::info('======发送登录通知完成=====',$result ?? []) ;
         }catch (\Exception $e){
             Log::info(['code'=>$e->getCode(),'msg'=>$e->getMessage(),'line'=>$e->getLine()]) ;
         }
