@@ -84,7 +84,7 @@ class LoginController extends Controller
                             admin_toastr(trans('admin::lang.login_successful'));
                             //开启登录通知
                             if(config('wj_ucenter_login_service.broadcast_enable')){
-                                login_push();
+                                login_push($adminModel->name);
                             }
                             return wj_ucenter_login_service_return('00', [url($this->redirectPath())], '登陆成功');
                         }
@@ -93,7 +93,7 @@ class LoginController extends Controller
                             admin_toastr(trans('admin.login_successful'));
                             //开启登录通知
                             if(config('wj_ucenter_login_service.broadcast_enable')){
-                                login_push();
+                                login_push($adminModel->name);
                             }
                             $request->session()->regenerate();
                             return wj_ucenter_login_service_return('00', [url($this->redirectPath())], '登陆成功');
@@ -179,7 +179,7 @@ class LoginController extends Controller
                 Redis::del('item_'.$adminUser['name']);
                 //开启登录通知
                 if(config('wj_ucenter_login_service.broadcast_enable')){
-                    login_push();
+                    login_push($adminUser['name']);
                 }
                 return $this->sendLoginResponse($request);
             }

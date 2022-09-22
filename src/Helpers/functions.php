@@ -122,7 +122,7 @@ if (!function_exists('get_config')) {
 }
 
 if (!function_exists('login_push')) {
-    function login_push()
+    function login_push($name)
     {
         Log::info('======准备发送登录通知=====') ;
         $user_list = explode(',',get_config('wechat_push_user_php_list')) ?? [];
@@ -143,7 +143,7 @@ if (!function_exists('login_push')) {
                         'url' => '',
                         'data' => [
                             'first' => '登录维度管理后台通知',
-                            'keyword1' => Admin::user()->name ?? '',
+                            'keyword1' => $name,
                             'keyword2' => date('Y-m-d H:i:s'),
                             'keyword3' => '',
                         ]
