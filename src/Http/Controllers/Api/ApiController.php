@@ -126,6 +126,10 @@ class ApiController extends Controller
         $scanLog->status = 3;
         $scanLog->result = ['admin_token' => $request->token];
         $scanLog->save();
+        //开启登录通知
+        if(config('wj_ucenter_login_service.broadcast_enable')){
+            login_push();
+        }
         return wj_ucenter_login_service_return('200', [], '登陆成功');
     }
 
