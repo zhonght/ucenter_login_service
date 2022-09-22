@@ -2,13 +2,16 @@
 
 namespace Weigather\WJUcenterLoginService\Http\Controllers\Admin;
 
+use Encore\Admin\Facades\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Weigather\WJUcenterLoginService\Models\AdminScanBind;
 use Illuminate\Support\Facades\Redis;
+use Weigather\WJUcenterLoginService\Services\BroadcastService;
 
 /**
  * 重写的登陆逻辑
@@ -79,11 +82,19 @@ class LoginController extends Controller
                     if (get_wj_ucenter_login_service_version() <= 1) {
                         if ($this->guard()->attempt($credentials)) {
                             admin_toastr(trans('admin::lang.login_successful'));
+                            //开启登录通知
+                            if(config('wj_ucenter_login_service.broadcast_enable')){
+                                login_push();
+                            }
                             return wj_ucenter_login_service_return('00', [url($this->redirectPath())], '登陆成功');
                         }
                     } else {
                         if ($this->guard()->loginUsingId($adminModel->id)) {
                             admin_toastr(trans('admin.login_successful'));
+                            //开启登录通知
+                            if(config('wj_ucenter_login_service.broadcast_enable')){
+                                login_push();
+                            }
                             $request->session()->regenerate();
                             return wj_ucenter_login_service_return('00', [url($this->redirectPath())], '登陆成功');
                         }
@@ -149,7 +160,7 @@ class LoginController extends Controller
             'admin_token' => 'nullable'
         ]);
         if (isset($request->admin_token)) {
-            
+
             if ($validator->fails()) {
                 return wj_ucenter_login_service_return('500', [], '验证失败');
             }
@@ -166,6 +177,10 @@ class LoginController extends Controller
 
             if ($this->guard()->loginUsingId($adminUser['id'])) {
                 Redis::del('item_'.$adminUser['name']);
+                //开启登录通知
+                if(config('wj_ucenter_login_service.broadcast_enable')){
+                    login_push();
+                }
                 return $this->sendLoginResponse($request);
             }
             return wj_ucenter_login_service_return('500', [], 'Token无效');

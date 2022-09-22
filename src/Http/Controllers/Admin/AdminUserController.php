@@ -2,6 +2,7 @@
 
 namespace Weigather\WJUcenterLoginService\Http\Controllers\Admin;
 
+use Encore\Admin\Auth\Database\Administrator;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Facades\Admin;
@@ -12,6 +13,8 @@ use Weigather\WJUcenterLoginService\Models\AdminScanBind;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\MessageBag;
+use Weigather\WJUcenterLoginService\Models\AdminScanConfig;
 
 /**
  * 重写后台用户列表
@@ -40,7 +43,18 @@ class AdminUserController extends UserController
     public function scanGrid(){
         $userModel = config('admin.database.users_model');
         $userName = config('admin.database.users_table');
+        $roleModel = config('admin.database.roles_model');
+
         $grid = new Grid(new $userModel());
+        if(!Admin::user()->isAdministrator()){
+            $adminId = (new $roleModel())->where('slug','administrator')->value('id') ?? 0;
+            $adminIds = (new $userModel())->select('id')->with(['roles' => function($query) use($adminId) {
+                $query->where('id',$adminId);
+            }])->get()->filter(function($val, $key){
+                return count($val->roles) < 1;
+            })->pluck('id')->toArray() ?? [];
+            $grid->model()->whereIn('id',$adminIds);
+        }
         $grid->model()->leftjoin('admin_item as t2','t2.admin_id',$userName.'.id')->select($userName.'.*','t2.status as item_admin_id');
         $grid->column('id', 'ID')->sortable();
         $grid->column('username', trans('admin.username'));
@@ -115,6 +129,7 @@ class AdminUserController extends UserController
     public function form()
     {
         $item_admin_id = Request::input('item_admin_id');
+        $operate_pws = Request::input('operate_pws');
         $userModel = config('admin.database.users_model');
         $permissionModel = config('admin.database.permissions_model');
         $roleModel = config('admin.database.roles_model');
@@ -138,19 +153,49 @@ class AdminUserController extends UserController
             });
 
         $form->ignore(['password_confirmation']);
+        $roles = $roleModel::all()->pluck('name', 'id');
+        if(!Admin::user()->isAdministrator()){
+            $roles = (new $roleModel())->where('slug','<>','administrator')->pluck('name','id');
+        }
 
-        $form->multipleSelect('roles', trans('admin.roles'))->options($roleModel::all()->pluck('name', 'id'));
+        $form->multipleSelect('roles', trans('admin.roles'))->options($roles);
         $form->multipleSelect('permissions', trans('admin.permissions'))->options($permissionModel::all()->pluck('name', 'id'));
 
         $form->switch('item_admin_id','总码登陆')->states(['1','0'])->default(function () use($form) {
             $status = Db::table('admin_item')->where('admin_id',$form->model()->id)->value('status');
             return $status != null ? $status : 0;
         });
+
+        if(config('wj_ucenter_login_service.verify_operate_psw')){
+            $form->password('operate_pws','操作密码')->required();
+            $form->ignore(['operate_pws']);
+        }
+
         $form->display('created_at', trans('admin.created_at'));
         $form->display('updated_at', trans('admin.updated_at'));
 
+        $form->saving(function (Form $form) use($operate_pws){
+            $error = new MessageBag([
+                'title'   => '操作密码错误',
+                'message' => '',
+            ]);
+            $config_error = new MessageBag([
+                'title'   => '操作密码配置错误！',
+                'message' => '',
+            ]);
 
-        $form->saving(function (Form $form) {
+            // 如果开启验证操作密码
+            if(config('wj_ucenter_login_service.verify_operate_psw')){
+                if(empty(get_config('operate_psw'))){
+                    return back()->with(compact('config_error'));
+                }
+                if(empty($operate_pws)){
+                    return back()->with(compact('error'));
+                }
+                if(!empty($operate_pws) && md5($operate_pws) != get_config('operate_psw')) {
+                    return back()->with(compact('error'));
+                }
+            }
             if ($form->password && $form->model()->password != $form->password) {
                 $form->password = Hash::make($form->password);
             }
