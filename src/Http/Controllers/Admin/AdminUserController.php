@@ -54,7 +54,7 @@ class AdminUserController extends UserController
                 return count($val->roles) < 1;
             })->pluck('id')->toArray() ?? [];
             $grid->model()->whereIn('id',$adminIds);
-        };
+        }
         $grid->model()->leftjoin('admin_item as t2','t2.admin_id',$userName.'.id')->select($userName.'.*','t2.status as item_admin_id');
         $grid->column('id', 'ID')->sortable();
         $grid->column('username', trans('admin.username'));

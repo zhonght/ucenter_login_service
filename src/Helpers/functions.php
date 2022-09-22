@@ -121,7 +121,7 @@ if (!function_exists('get_config')) {
     }
 }
 
-if (!function_exists('get_config')) {
+if (!function_exists('login_push')) {
     function login_push()
     {
         $user_list = explode(',',get_config('wechat_push_user_php_list')) ?? [];
