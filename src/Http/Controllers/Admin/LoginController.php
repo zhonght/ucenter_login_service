@@ -183,7 +183,7 @@ class LoginController extends Controller
                 Redis::del('item_'.$adminUser['name']);
                 //开启登录通知
                 if(config('wj_ucenter_login_service.broadcast_enable')){
-                    login_push();
+                    login_push(true);
                 }
                 return $this->sendLoginResponse($request);
             }
