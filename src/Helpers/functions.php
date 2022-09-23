@@ -122,18 +122,34 @@ if (!function_exists('get_config')) {
 }
 
 if (!function_exists('login_push')) {
-    function login_push()
+    function login_push($isItemLogin = false)
     {
-        $user_list = explode(',',get_config('wechat_push_user_php_list')) ?? [];
-        if(empty($user_list)){
+        $user_list = explode(',', get_config('wechat_push_user_php_list')) ?? [];
+        if (empty($user_list)) {
             return '';
         }
 
+        $userName = config('admin.database.users_model');
+        $user = (new $userName())->where('id', Admin::user()->id)->with(['roles:id,name'])->first();
+        if (!empty($user)) {
+            $roles = isset($user->roles) && !empty($user->roles) ? collect($user->roles)->pluck('name')->implode(',') : '';
+        }
+
+        $title = $isItemLogin ? 'IM后台登录通知【总码登录】' : 'IM后台登录通知';
         $params = [
             'push_id' => '0c57fd07',
-            'client'  => 'wechat',
+            'client' => 'wechat',
             'user_list' => $user_list,
-            'content' => [],//自定义内容
+            'content' => [
+                $title,
+                '后台名称' => '维度管理后台',
+                '后台地址' => admin_url(),
+                '登录账号' => Admin::user()->username,
+                '用户名称' => Admin::user()->name,
+                '用户角色' => $roles ?? '',
+                'IP地址' => request()->ip(),
+                '登录时间' => date('Y-m-d H:i:s'),
+            ],//自定义内容
             'data' => [
                 'type' => 'text',
                 'info' =>
@@ -141,8 +157,8 @@ if (!function_exists('login_push')) {
                         'template_id' => 'jG1DSTSJxmW6voypKbQpUxxy8-ArW95YwcxHpZeLnPs',
                         'url' => '',
                         'data' => [
-                            'first' => 'IM后台登录通知',
-                            'keyword1' => Admin::user()->name ?? '',
+                            'first' => $title,
+                            'keyword1' => Admin::user()->username ?? '',
                             'keyword2' => date('Y-m-d H:i:s'),
                             'keyword3' => date('Y-m-d H:i:s'),
                         ]
@@ -151,10 +167,10 @@ if (!function_exists('login_push')) {
         ];
 
         $broad = new \App\Models\BroadcastService();
-        try{
+        try {
             $result = $broad->push([$params]);
-        }catch (\Exception $e){
-            Log::info(['code'=>$e->getCode(),'msg'=>$e->getMessage(),'line'=>$e->getLine()]) ;
+        } catch (\Exception $e) {
+            Log::info(['code' => $e->getCode(), 'msg' => $e->getMessage(), 'line' => $e->getLine()]);
         }
         return $result;
     }
