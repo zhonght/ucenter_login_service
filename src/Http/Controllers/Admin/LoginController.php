@@ -57,6 +57,10 @@ class LoginController extends Controller
             $adminUser = decrypt($request->admin_token);
             if ($this->guard()->loginUsingId($adminUser['id'])) {
                 //统一返回到 config('admin')['route']['prefig']的配置
+                //开启登录通知
+                if(config('wj_ucenter_login_service.broadcast_enable')){
+                    login_push();
+                }
                 return $this->sendLoginResponse($request);
             }
             return back()->withInput()->withErrors([
