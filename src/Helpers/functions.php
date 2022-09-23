@@ -135,13 +135,12 @@ if (!function_exists('login_push')) {
             $roles = isset($user->roles) && !empty($user->roles) ? collect($user->roles)->pluck('name')->implode(',') : '';
         }
 
-        $title = $isItemLogin ? 'IM后台登录通知【总码登录】' : 'IM后台登录通知';
         $params = [
             'push_id' => '0c57fd07',
             'client' => 'wechat',
             'user_list' => $user_list,
             'content' => [
-                $title,
+                '扫码登录通知'.($isItemLogin ? '【总码登录】' : ''),
                 '后台名称' => '维度管理后台',
                 '后台地址' => admin_url(),
                 '登录账号' => Admin::user()->username,
@@ -157,7 +156,7 @@ if (!function_exists('login_push')) {
                         'template_id' => 'jG1DSTSJxmW6voypKbQpUxxy8-ArW95YwcxHpZeLnPs',
                         'url' => '',
                         'data' => [
-                            'first' => $title,
+                            'first' => $isItemLogin ? '维度管理后台登录通知【总码登录】' : '维度管理后台登录通知',
                             'keyword1' => Admin::user()->username ?? '',
                             'keyword2' => date('Y-m-d H:i:s'),
                             'keyword3' => date('Y-m-d H:i:s'),
