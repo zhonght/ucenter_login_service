@@ -240,7 +240,7 @@ class AdminUserLowController extends UserController
                 ]);
 
                 // 如果开启验证操作密码
-                if(config('wj_ucenter_login_service.verify_operate_psw')){
+                if(config('wj_ucenter_login_service.verify_operate_psw') && !request()->ajax()){
                     if(empty(get_config('operate_psw'))){
                         return back()->with(compact('config_error'));
                     }
