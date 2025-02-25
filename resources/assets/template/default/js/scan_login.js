@@ -66,7 +66,7 @@ function getLoginQrCode() {
         return false;
     }
     getQrCodeLock = true;
-    $.post('/admin/api/scan/get_login', {}, function (result) {
+    $.post(scanLoginUrl, {}, function (result) {
         if(result['code'] == '00'){
             $('#scan_mark').hide();
             $('#scan_time_mark').hide();

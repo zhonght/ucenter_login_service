@@ -10,14 +10,14 @@ class ServiceUserCenter
 {
     // 修改目录为大写
     private $appId;
+    private $appHost;
     private $appSecret;
 
     public $lang = "zh-CN";// en
 
-    const API_HOST = 'http://ucenter.service.weigather.com/';
 
-    const SCAN_BIND= 'scan/v1/bind';
-    const SCAN_LOGIN= 'scan/v1/login';
+    const SCAN_BIND= '/scan/v1/bind';
+    const SCAN_LOGIN= '/scan/v1/login';
     const SCAN_VERIFY= '/scan/v1/verify';
 
 
@@ -28,6 +28,7 @@ class ServiceUserCenter
      */
     public function __construct()
     {
+        $this->appHost = config('wj_ucenter_login_service.user_center.app_host');
         $this->appId = config('wj_ucenter_login_service.user_center.app_id');
         $this->appSecret = config('wj_ucenter_login_service.user_center.app_secret');
     }
@@ -70,11 +71,11 @@ class ServiceUserCenter
     {
         $charts = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz0123456789";
         $max = strlen($charts);
-        $noncestr = "";
+        $nonceStr = "";
         for ($i = 0; $i < $length; $i++) {
-            $noncestr .= $charts[mt_rand(0, $max - 1)];
+            $nonceStr .= $charts[mt_rand(0, $max - 1)];
         }
-        return $noncestr;
+        return $nonceStr;
     }
 
 
@@ -89,8 +90,7 @@ class ServiceUserCenter
             $data['extend'] = $extend;
         }
         $data = $this->appIdSign($data);
-        $res = $this->http(self::API_HOST . self::SCAN_BIND, $data);
-        return $res;
+        return $this->http( self::SCAN_BIND, $data);
     }
 
 
@@ -101,8 +101,7 @@ class ServiceUserCenter
             $data['extend'] = $extend;
         }
         $data = $this->appIdSign($data);
-        $res = $this->http(self::API_HOST . self::SCAN_LOGIN, $data);
-        return $res;
+        return $this->http( self::SCAN_LOGIN, $data);
     }
 
 
@@ -118,8 +117,7 @@ class ServiceUserCenter
             $data['extend'] = $extend;
         }
         $data = $this->appIdSign($data);
-        $res = $this->http(self::API_HOST . self::SCAN_VERIFY, $data);
-        return $res;
+        return $this->http(self::SCAN_VERIFY, $data);
     }
 
     /*
@@ -131,15 +129,16 @@ class ServiceUserCenter
      */
     protected function http($url, $params = array(), $post = true)
     {
-        $opts = array(
+        $url = $this->appHost .$url;
+        $opts = [
             CURLOPT_TIMEOUT => 30,
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_SSL_VERIFYPEER => false,
             CURLOPT_SSL_VERIFYHOST => false,
             CURLOPT_ENCODING => 'gzip',
-        );
+        ];
         /* 根据请求类型设置特定参数 */
-        if ($post == false) {
+        if (!$post) {
             $opts[CURLOPT_URL] = $url . '?' . http_build_query($params);
         } else {
             $opts[CURLOPT_URL] = $url;
@@ -158,11 +157,10 @@ class ServiceUserCenter
         /* 初始化并执行curl请求 */
         $ch = curl_init();
         curl_setopt_array($ch, $opts);
-        $responsedata = curl_exec($ch);
+        $responseData = curl_exec($ch);
         $error = curl_error($ch);
         curl_close($ch);
-        $data = json_decode($responsedata, true);
-        return $data;
+        return json_decode($responseData, true);
     }
 
 }

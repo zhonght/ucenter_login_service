@@ -47,7 +47,7 @@ if (!function_exists('get_wj_ucenter_login_service_version')) {
                 (new ReflectionClass("\Encore\Admin\Admin"))->hasConstant('VERSION')
             ){
                 $version = \Encore\Admin\Admin::VERSION;
-                if(in_array($version, ['1.8.1','1.8.2','1.8.3','1.8.4','1.8.5','1.8.6','1.8.7','1.8.8','1.8.9','1.8.10'])){
+                if(in_array($version, ['1.8.1','1.8.2','1.8.3','1.8.4','1.8.5','1.8.6','1.8.7','1.8.8','1.8.9','1.8.10','1.8.11','1.8.12','1.8.13','1.8.14','1.8.15','1.8.16','1.8.17'])){
                     return 4;
                 }
                 $versionArray = explode('.',$version);

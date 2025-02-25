@@ -16,10 +16,13 @@ Route::group([
         $route->post('login', ApiController::class . '@login');
         $route->post('auth', ApiController::class . '@auth');
         $route->post('users',ApiController::class . '@users');
+        $route->post('boss/users',ApiController::class . '@bossUsers');
+        $route->post('boss/login',ApiController::class . '@bossLogin');
 
         // 自身扫码的接口
         $route->post('get_login',AdminController::class . '@getLoginCode');
         $route->post('get_verify', AdminController::class . '@getVerifyCode');
         $route->post('code_status', AdminController::class . '@getCodeStatus');
+
     });
 });

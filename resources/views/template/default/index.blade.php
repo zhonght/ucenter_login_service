@@ -36,7 +36,7 @@
 
 <div class="login-box">
     <div class="login-logo">
-        <a href="{{ admin_url('/') }}"><b>{{config('admin.name')}}</b></a>
+        <a href="{{ admin_url('/') }}"><b>{{config('admin.name')}}234</b></a>
     </div>
 
 
@@ -125,6 +125,7 @@
 <script>
     var qrCodeLoading = "{{ admin_asset("vendor/weigather/wj_ucenter_login_service/template/default/img/qr_code_loading.gif")}}";
     var passwordLoginUrl = "{{ admin_url('auth/login') }}";
+    var scanLoginUrl = "{{ admin_url('api/scan/get_login') }}";
     var csrfToken = "{{ csrf_token() }}";
 
 </script>

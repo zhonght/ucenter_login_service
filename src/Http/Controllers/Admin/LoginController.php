@@ -3,12 +3,20 @@
 namespace Weigather\WJUcenterLoginService\Http\Controllers\Admin;
 
 use Encore\Admin\Facades\Admin;
+use Illuminate\Config\Repository;
+use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Contracts\Auth\StatefulGuard;
+use Illuminate\Contracts\Translation\Translator;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\View\View;
 use Weigather\WJUcenterLoginService\Models\AdminScanBind;
 use Illuminate\Support\Facades\Redis;
 use Weigather\WJUcenterLoginService\Services\BroadcastService;
@@ -23,7 +31,7 @@ class LoginController extends Controller
 
     /**
      * 登陆页面
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
+     * @return Factory|RedirectResponse|Redirector|View
      */
     public function getLogin()
     {
@@ -35,13 +43,16 @@ class LoginController extends Controller
         if (!is_null($externalTemplate)) {
             return view($externalTemplate, compact('assetUrl'));
         }
-        return view('wj_ucenter_login_service::template.' . config('wj_ucenter_login_service.template') . '.index', compact('assetUrl'));
+        return view(
+            'wj_ucenter_login_service::template.' . config('wj_ucenter_login_service.template') . '.index',
+            compact('assetUrl')
+        );
     }
 
     /**
      * 登陆逻辑
      * @param Request $request
-     * @return array|\Illuminate\Http\RedirectResponse
+     * @return array|RedirectResponse
      */
     public function postLogin(Request $request)
     {
@@ -112,7 +123,7 @@ class LoginController extends Controller
     /**
      * 登陆成的跳转
      * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     protected function sendLoginResponse(Request $request)
     {
@@ -125,7 +136,7 @@ class LoginController extends Controller
 
     /**
      * 登陆失败的文字
-     * @return array|\Illuminate\Contracts\Translation\Translator|null|string
+     * @return array|Translator|null|string
      */
     protected function getFailedLoginMessage()
     {
@@ -136,7 +147,7 @@ class LoginController extends Controller
 
     /**
      * 获取跳转地址
-     * @return \Illuminate\Config\Repository|mixed
+     * @return Repository|mixed
      */
     protected function redirectPath()
     {
@@ -148,7 +159,7 @@ class LoginController extends Controller
 
     /**
      * 认证器
-     * @return \Illuminate\Contracts\Auth\Guard|\Illuminate\Contracts\Auth\StatefulGuard
+     * @return Guard|StatefulGuard
      */
     protected function guard()
     {
@@ -158,7 +169,7 @@ class LoginController extends Controller
     /**
      * 总码登陆逻辑
     */
-    public function itemLogin(Request $request)
+    public function bossLogin(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'admin_token' => 'nullable'
@@ -169,22 +180,22 @@ class LoginController extends Controller
                 return wj_ucenter_login_service_return('500', [], '验证失败');
             }
             $adminUser = decrypt($request->admin_token);
+            $redisKey = 'boss_'.$adminUser['username'];
             // 判断总码是否被登陆过 获取过期
-            if(Redis::exists('item_'.$adminUser['name']) == false){
+            if(Redis::exists($redisKey) == false){
                 return wj_ucenter_login_service_return('500', [], 'Token已过期');
             }
-            $admin_token = Redis::get('item_'.$adminUser['name']);
-
+            $admin_token = Redis::get($redisKey);
             if($admin_token != $request->admin_token){
                 return wj_ucenter_login_service_return('500', [], 'Token无效');
             }
 
-            if ($this->guard()->loginUsingId($adminUser['id'])) {
-                Redis::del('item_'.$adminUser['name']);
+            if ($this->guard()->loginUsingId($adminUser['admin_id'])) {
+                Redis::del($redisKey);
                 //开启登录通知
-                if(config('wj_ucenter_login_service.broadcast_enable')){
-                    login_push(true);
-                }
+//                if(config('wj_ucenter_login_service.broadcast_enable')){
+//                    login_push(true);
+//                }
                 return $this->sendLoginResponse($request);
             }
             return wj_ucenter_login_service_return('500', [], 'Token无效');

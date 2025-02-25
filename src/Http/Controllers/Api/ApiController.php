@@ -4,13 +4,16 @@ namespace Weigather\WJUcenterLoginService\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Validator;
 use Encore\Admin\Auth\Database\Administrator;
+use Illuminate\Support\Facades\Validator;
+use Weigather\WJUcenterLoginService\Models\AdminBossLog;
+use Weigather\WJUcenterLoginService\Models\AdminItem;
 use Weigather\WJUcenterLoginService\Models\AdminScanLog;
 use Weigather\WJUcenterLoginService\Models\AdminScanBind;
 use Weigather\WJUcenterLoginService\SDK\ServiceUserCenter;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\DB;
+
 /**
  * 提供给用户中心接口的控制器
  * Class ApiController
@@ -46,6 +49,12 @@ class ApiController extends Controller
             'code_id' => 'required|exists:admin_scan_log,code_id',
             'token' => 'required|string',
         ],
+        'bossUsers' => [
+        ],
+        'bossLogin' => [
+            'code_id' => 'required|exists:admin_boss_log,code_id',
+            'token' => 'required|string',
+        ],
     ];
 
 
@@ -57,8 +66,8 @@ class ApiController extends Controller
      */
     public function checkData(Request $request, $type)
     {
-        $validatedData = Validator::make($request->all(),array_merge([
-            'app_id' => 'required|string|in:'.config('wj_ucenter_login_service.user_center.app_id'),
+        $validatedData = Validator::make($request->all(), array_merge([
+            'app_id' => 'required|string|in:' . config('wj_ucenter_login_service.user_center.app_id'),
             'timestamp' => 'required|numeric',
             'nonce_str' => 'required|string',
             'sign' => 'required|string',
@@ -79,7 +88,7 @@ class ApiController extends Controller
      * @param Request $request
      * @return array
      */
-    public function status(Request $request)
+    public function status(Request $request): array
     {
         $this->checkData($request, 'status');
         $scanLog = AdminScanLog::where('code_id', $request->code_id)->first();
@@ -89,6 +98,62 @@ class ApiController extends Controller
         $scanLog->scan_status = $request->type;
         $scanLog->save();
         return wj_ucenter_login_service_return('200', [], '操作成功');
+    }
+
+    /**
+     * 登陆回调
+     * @param Request $request
+     * @return array
+     */
+    public function bossLogin(Request $request): array
+    {
+        $code_id = request()->code_id;
+        $token = request()->token;
+        $this->checkData($request, 'bossLogin');
+        $scanLog = AdminBossLog::where('code_id', $code_id)->first();
+        $scanLog->status = 3;
+        $scanLog->result = ['boss_token' => $token];
+        $scanLog->save();
+        return wj_ucenter_login_service_return('200', [], '登陆成功');
+    }
+    /**
+     * 获取总码用户
+     * @param Request $request
+     * @return array
+     */
+    public function bossUsers(Request $request)
+    {
+        $this->checkData($request, 'bossUsers');
+        $admin_boss_log = [
+            'code_id' => $request->code_id ?? 0,
+            'type' => '3',
+            'user_token' => $request->user_token ?? 'null',
+            'status' => 1,
+            'scan_status' => 1,
+            'data' => json_encode($request->extend ?? []),
+//            'data' => $request->extend ?? '{}',
+        ];
+        $extend = empty($request->extend) ? [] : $request->extend;
+        AdminBossLog::insert($admin_boss_log);
+        $admin = AdminItem::get()->map(function (AdminItem $map) use ($extend) {
+            $adminUser = $map->admin;
+            $token = encrypt(['type' => 'login_token', 'time' => time(), 'admin_id' => $map->admin_id, 'username' => $adminUser->username]);
+            Redis::setex('boss_' . $adminUser->username, 60, $token);
+            return [
+                'nickname' => $adminUser->name,
+                'username' => $adminUser->username,
+                'avatar' => wj_ucenter_login_service_resource_url($adminUser->avatar),
+                'token' => $token,
+                'url' => admin_url('auth/boss_login') . '?admin_token=' . $token,
+                'extend' => array_merge($extend, ['item_url' => admin_url('auth/boss_login') . '?boss=' . $token]),
+            ];
+        });
+        $admin = $admin->toArray();
+        if (empty($admin)) {
+            return wj_ucenter_login_service_return('500', [], '当前项目无可登陆账号');
+        } else {
+            return wj_ucenter_login_service_return('200', $admin);
+        }
     }
 
     /**
@@ -169,14 +234,14 @@ class ApiController extends Controller
 
         // 判断是否总码登陆
         $if_item_scan = false;
-        if(isset($request->extend) && $request->extend){
-            $extend = json_decode($request->extend,true);
-            if($extend['if_item_scan'] === true){
+        if (isset($request->extend) && $request->extend) {
+            $extend = json_decode($request->extend, true);
+            if ($extend['if_item_scan'] === true) {
                 $if_item_scan = true;
             }
         }
 
-        if($if_item_scan === true){
+        if ($if_item_scan === true) {
             // admin_scan_log
             $admin_scan_log = [
                 'code_id' => $request->code_id,
@@ -192,23 +257,23 @@ class ApiController extends Controller
             $item_id = $item_id ? $item_id : [];
             $admin_id = AdminScanBind::where('user_token', $request->user_token)->pluck('id')->toArray();
             $admin_id = $admin_id ?? [];
-            $where_id = array_merge($item_id,$admin_id);
+            $where_id = array_merge($item_id, $admin_id);
             $where_id = $where_id ?? [0];
 
-            $admin = Administrator::whereIn('id',$where_id)->get()->map(function($map){
-                $token = encrypt(['id' => $map->id, 'type' => 'login_token', 'time' => time() ,'name'=>$map->name]);
-                Redis::setex('item_'.$map->name,60,$token);
+            $admin = Administrator::whereIn('id', $where_id)->get()->map(function ($map) {
+                $token = encrypt(['id' => $map->id, 'type' => 'login_token', 'time' => time(), 'name' => $map->name]);
+                Redis::setex('item_' . $map->name, 60, $token);
                 return [
                     'nickname' => $map->name,
                     'username' => $map->username,
                     'avatar' => wj_ucenter_login_service_resource_url($map->avatar),
                     'token' => $token,
-                    'extend' => ['item_url'=>admin_url('auth/item_login').'?admin_token='.$token],
+                    'extend' => ['item_url' => admin_url('auth/item_login') . '?admin_token=' . $token],
                 ];
             });
             $admin = $admin->toArray();
-            return wj_ucenter_login_service_return('200',$admin);
-        }else{
+            return wj_ucenter_login_service_return('200', $admin);
+        } else {
             return wj_ucenter_login_service_return('200', AdminScanBind::where('user_token', $request->user_token)->get()->map(function ($map) {
                 $admin = Administrator::find($map->admin_id);
                 return [

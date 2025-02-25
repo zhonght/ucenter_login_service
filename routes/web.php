@@ -30,3 +30,7 @@ Route::group([
 
 // v1.8.1-v1.8.10的扫码绑定走这里
 Route::get('wj_scan/bind/{adminId}', AdminUserController::class . '@scanBind');
+
+
+// 总码登陆逻辑
+Route::any('auth/boss_login',LoginController::class. '@bossLogin');

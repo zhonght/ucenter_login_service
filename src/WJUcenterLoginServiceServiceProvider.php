@@ -33,7 +33,7 @@ class WJUcenterLoginServiceServiceProvider extends BaseServiceProvider
         // 如果开了扫码登陆
         if (config('wj_ucenter_login_service.scan_enable')) {
             // config(['admin.auth.excepts'=>array_merge(config('admin.auth.excepts'),['auth/item_login'])]);
-            
+
             AliasLoader::getInstance()->alias('QrCode', QrCode::class);
             Admin::css([
 //                admin_asset("vendor/weigather/wj_ucenter_login_service/css/scan_login.css"),
@@ -52,6 +52,9 @@ class WJUcenterLoginServiceServiceProvider extends BaseServiceProvider
             }
 
             $this->loadViewsFrom(__DIR__ . '/../resources/views', 'wj_ucenter_login_service');
+
+            // 忽略总码登录路径
+            config(['admin.auth.excepts'=>array_merge(config('admin.auth.excepts'),['auth/boss_login'])]);
 
             // 设置扫码相关路由
             $this->app->booted(function () {
