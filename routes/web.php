@@ -10,11 +10,11 @@ use \Weigather\WJUcenterLoginService\Http\Controllers\Admin\AdminUserController;
 Route::resource('auth/users', AdminUserController::class);
 
 
-// 重写登陆逻辑
+// 重写‌登录逻辑
 Route::get('auth/login',  LoginController::class . '@getLogin');
 Route::post('auth/login',  LoginController::class . '@postLogin');
 
-// 总码登陆逻辑
+// 总码‌登录逻辑
 Route::get('auth/item_login', LoginController::class. '@itemLogin');
 
 // 绑定二维码生成接口
@@ -32,5 +32,5 @@ Route::group([
 Route::get('wj_scan/bind/{adminId}', AdminUserController::class . '@scanBind');
 
 
-// 总码登陆逻辑
+// 总码‌登录逻辑
 Route::any('auth/boss_login',LoginController::class. '@bossLogin');

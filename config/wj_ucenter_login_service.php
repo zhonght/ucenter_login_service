@@ -2,13 +2,13 @@
 
 return [
 
-    // 是否开启扫码登陆
+    // 是否开启扫码‌登录
     'scan_enable' => env('WJ_UCENTER_LOGIN_SERVICE_ENABLE',true),
 
     // 是否开启扫码验证
     'verify_enable' => env('WJ_UCENTER_LOGIN_SERVICE_VERIFY_ENABLE',true),
 
-    // 登陆的背景图
+    // ‌登录的背景图
     'login_bg_img' => '',
 
     // 统一用户中心的配置
@@ -18,10 +18,10 @@ return [
         'app_secret'=>env('WJ_UCENTER_LOGIN_SERVICE_APP_SECRET','app_secret'),
     ],
 
-    // 官方模板 default enterprise generous technology
+    // 官方模板 default enterprise generous technology 
     'template' => env('WJ_UCENTER_LOGIN_SERVICE_TEMPLATE','default'),
 
-    // 自定义登陆页面的视图
+    // 自定义‌登录页面的视图
     'external_template' => env('WJ_UCENTER_LOGIN_SERVICE_EXTERNAL_TEMPLATE',null),
 
     // 是否开启验证操作密码

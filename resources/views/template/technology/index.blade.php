@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>{{config('admin.title')}} | 登陆</title>
+    <title>{{config('admin.title')}} | ‌登录</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
@@ -55,7 +55,7 @@
             <div class="row">
                 <div class="col-xs-12">
                     <button type="button"
-                            class="scan-password-btn btn btn-primary btn-block btn-flat">登陆</button>
+                            class="scan-password-btn btn btn-primary btn-block btn-flat">‌登录</button>
                 </div>
             </div>
         </form>
@@ -94,11 +94,11 @@
     <!-- 角标 -->
     <div class="login_saomao">
         <div class="passd_login account-check" >使用账号登录</div>
-        <div class="passd_login login-check" >重新登陆</div>
+        <div class="passd_login login-check" >重新‌登录</div>
         <img src="{{admin_asset("vendor/weigather/wj_ucenter_login_service/template/generous/img/scan-check.png")}}" alt="" class="tagBtn scan-check" style="display: none;" >
     </div>
 
-    <!-- 全部使用admin_token登陆 -->
+    <!-- 全部使用admin_token‌登录 -->
     <form action="" id="to_login_form" method="post" style="display: none">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <input type="hidden" name="admin_token" id="admin_token">

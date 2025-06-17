@@ -94,7 +94,7 @@ class ServiceUserCenter
     }
 
 
-    // 扫码登陆账号
+    // 扫码‌登录账号
     public function scanLogin($extend = null){
         $data = [];
         if (!is_null($extend)) {

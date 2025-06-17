@@ -64,7 +64,7 @@ $(function () {
     });
 
 
-    // 密码登陆
+    // 密码‌登录
     $('.scan-password-btn').click(function () {
         passwordLogin();
     });
@@ -159,7 +159,7 @@ function getQrCodeStatus() {
                     clearInterval(timer);
                 }else if(status == 3){
                     clearInterval(timer);
-                    toast("登陆成功");
+                    toast("‌登录成功");
                     $('#admin_token').val(result['data'][2]);
                     $('#to_login_form').attr('action',result['data'][1]);
                     $('#to_login_form').submit();
@@ -203,7 +203,7 @@ function getQrCodeStatus() {
 var passwordLoginLock = false;
 function passwordLogin(){
     if (passwordLoginLock) {
-        toast('正在登陆,请稍后');
+        toast('正在‌登录,请稍后');
         return false;
     }
     var username = $("#password_login_username").val();
@@ -224,7 +224,7 @@ function passwordLogin(){
     }, function (result) {
         if(result['code'] == '00'){
             // toast(result['msg'],result['data'][0]);
-            // 直接去登陆
+            // 直接去‌登录
             window.location.href = result['data'][0];
         }else if(result['code'] == '403'){
 

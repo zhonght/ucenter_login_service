@@ -44,7 +44,7 @@ class AdminController extends Controller
     }
 
     /**
-     * 获取登陆二维码
+     * 获取‌登录二维码
      * @param Request $request
      * @return array
      */
@@ -71,7 +71,7 @@ class AdminController extends Controller
     }
 
     /**
-     * 获取绑定二维码 这个接口需要登陆后台成功之后才可以调用
+     * 获取绑定二维码 这个接口需要‌登录后台成功之后才可以调用
      * @param Request $request
      * @return array
      */

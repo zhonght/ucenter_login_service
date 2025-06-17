@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Redis;
 use Weigather\WJUcenterLoginService\Services\BroadcastService;
 
 /**
- * 重写的登陆逻辑
+ * 重写的‌登录逻辑
  * Class LoginController
  * @package Encore\WJUcenterLoginService\Http\Controllers\Admin
  */
@@ -30,7 +30,7 @@ class LoginController extends Controller
 {
 
     /**
-     * 登陆页面
+     * ‌登录页面
      * @return Factory|RedirectResponse|Redirector|View
      */
     public function getLogin()
@@ -50,7 +50,7 @@ class LoginController extends Controller
     }
 
     /**
-     * 登陆逻辑
+     * ‌登录逻辑
      * @param Request $request
      * @return array|RedirectResponse
      */
@@ -101,7 +101,7 @@ class LoginController extends Controller
                             if(config('wj_ucenter_login_service.broadcast_enable')){
                                 login_push();
                             }
-                            return wj_ucenter_login_service_return('00', [url($this->redirectPath())], '登陆成功');
+                            return wj_ucenter_login_service_return('00', [url($this->redirectPath())], '‌登录成功');
                         }
                     } else {
                         if ($this->guard()->loginUsingId($adminModel->id)) {
@@ -111,7 +111,7 @@ class LoginController extends Controller
                                 login_push();
                             }
                             $request->session()->regenerate();
-                            return wj_ucenter_login_service_return('00', [url($this->redirectPath())], '登陆成功');
+                            return wj_ucenter_login_service_return('00', [url($this->redirectPath())], '‌登录成功');
                         }
                     }
                 }
@@ -121,7 +121,7 @@ class LoginController extends Controller
     }
 
     /**
-     * 登陆成的跳转
+     * ‌登录成的跳转
      * @param Request $request
      * @return RedirectResponse
      */
@@ -135,7 +135,7 @@ class LoginController extends Controller
     }
 
     /**
-     * 登陆失败的文字
+     * ‌登录失败的文字
      * @return array|Translator|null|string
      */
     protected function getFailedLoginMessage()
@@ -167,7 +167,7 @@ class LoginController extends Controller
     }
 
     /**
-     * 总码登陆逻辑
+     * 总码‌登录逻辑
     */
     public function bossLogin(Request $request)
     {
@@ -181,7 +181,7 @@ class LoginController extends Controller
             }
             $adminUser = decrypt($request->admin_token);
             $redisKey = 'boss_'.$adminUser['username'];
-            // 判断总码是否被登陆过 获取过期
+            // 判断总码是否被‌登录过 获取过期
             if(Redis::exists($redisKey) == false){
                 return wj_ucenter_login_service_return('500', [], 'Token已过期');
             }

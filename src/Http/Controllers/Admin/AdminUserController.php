@@ -37,7 +37,7 @@ class AdminUserController extends UserController
     }
 
     /**
-     * 扫码登陆的网格
+     * 扫码‌登录的网格
      * @return Grid
      */
     public function scanGrid(){
@@ -101,7 +101,7 @@ class AdminUserController extends UserController
             return new Table(['id', '用户标识', '绑定时间', '操作'],$comments);
         });
 
-        $grid->column('item_admin_id','总码登陆')->switch(['1','0']);
+        $grid->column('item_admin_id','总码‌登录')->switch(['1','0']);
 
         $grid->column('created_at', trans('admin.created_at'));
         $grid->column('updated_at', trans('admin.updated_at'));
@@ -161,7 +161,7 @@ class AdminUserController extends UserController
         $form->multipleSelect('roles', trans('admin.roles'))->options($roles);
         $form->multipleSelect('permissions', trans('admin.permissions'))->options($permissionModel::all()->pluck('name', 'id'));
 
-        $form->switch('item_admin_id','总码登陆')->states(['1','0'])->default(function () use($form) {
+        $form->switch('item_admin_id','总码‌登录')->states(['1','0'])->default(function () use($form) {
             $status = Db::table('admin_item')->where('admin_id',$form->model()->id)->value('status');
             return $status != null ? $status : 0;
         });

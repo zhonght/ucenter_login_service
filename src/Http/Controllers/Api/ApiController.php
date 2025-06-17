@@ -101,7 +101,7 @@ class ApiController extends Controller
     }
 
     /**
-     * 登陆回调
+     * ‌登录回调
      * @param Request $request
      * @return array
      */
@@ -114,7 +114,7 @@ class ApiController extends Controller
         $scanLog->status = 3;
         $scanLog->result = ['boss_token' => $token];
         $scanLog->save();
-        return wj_ucenter_login_service_return('200', [], '登陆成功');
+        return wj_ucenter_login_service_return('200', [], '‌登录成功');
     }
     /**
      * 获取总码用户
@@ -150,7 +150,7 @@ class ApiController extends Controller
         });
         $admin = $admin->toArray();
         if (empty($admin)) {
-            return wj_ucenter_login_service_return('500', [], '当前项目无可登陆账号');
+            return wj_ucenter_login_service_return('500', [], '当前项目无可‌登录账号');
         } else {
             return wj_ucenter_login_service_return('200', $admin);
         }
@@ -180,7 +180,7 @@ class ApiController extends Controller
     }
 
     /**
-     * 登陆回调
+     * ‌登录回调
      * @param Request $request
      * @return array
      */
@@ -191,7 +191,7 @@ class ApiController extends Controller
         $scanLog->status = 3;
         $scanLog->result = ['admin_token' => $request->token];
         $scanLog->save();
-        return wj_ucenter_login_service_return('200', [], '登陆成功');
+        return wj_ucenter_login_service_return('200', [], '‌登录成功');
     }
 
     /**
@@ -232,7 +232,7 @@ class ApiController extends Controller
     {
         $this->checkData($request, 'users');
 
-        // 判断是否总码登陆
+        // 判断是否总码‌登录
         $if_item_scan = false;
         if (isset($request->extend) && $request->extend) {
             $extend = json_decode($request->extend, true);

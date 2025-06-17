@@ -9,11 +9,11 @@ use \Weigather\WJUcenterLoginService\Http\Controllers\Admin\AdminUserLowControll
 // Route::get('auth/users', AdminUserLowController::class . '@index');
 Route::resource('auth/users', AdminUserLowController::class);
 
-// 重写登陆逻辑
+// 重写‌登录逻辑
 Route::get('auth/login',  LoginController::class . '@getLogin');
 Route::post('auth/login',  LoginController::class . '@postLogin');
 
-// 总码登陆逻辑
+// 总码‌登录逻辑
 Route::get('auth/item_login', LoginController::class. '@itemLogin');
 
 

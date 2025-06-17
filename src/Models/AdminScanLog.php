@@ -21,7 +21,7 @@ class AdminScanLog extends Model
     ];
 
     /**
-     * 创建登陆二维码
+     * 创建‌登录二维码
      * @return mixed
      */
     public static function createLoginCode()

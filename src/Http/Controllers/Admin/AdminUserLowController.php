@@ -35,7 +35,7 @@ class AdminUserLowController extends UserController
     }
 
     /**
-     * 扫码登陆的网格
+     * 扫码‌登录的网格
      * @return Grid
      */
     public function scanGrid()
@@ -70,7 +70,7 @@ class AdminUserLowController extends UserController
                 return "<a  target='_blank' href='" . admin_url('wj_scan/list/' . $this->id) . "'>【" . AdminScanBind::where('admin_id', $this->id)->count() . "】点击查看</a>";
             });
 
-            $grid->column('item_admin_id','总码登陆')->switch(['1','0']);
+            $grid->column('item_admin_id','总码‌登录')->switch(['1','0']);
 
             $grid->created_at(trans('admin::lang.created_at'));
             $grid->updated_at(trans('admin::lang.updated_at'));
@@ -217,7 +217,7 @@ class AdminUserLowController extends UserController
             $form->multipleSelect('roles', '角色')->options($roles);
             $form->multipleSelect('permissions', '权限')->options($permissionModel::all()->pluck('name', 'id'));
 
-            $form->switch('item_admin_id','总码登陆')->states(['1','0'])->default(function () use($form) {
+            $form->switch('item_admin_id','总码‌登录')->states(['1','0'])->default(function () use($form) {
                 $status = Db::table('admin_item')->where('admin_id',$form->model()->id)->value('status');
                 return $status != null ? $status : 0;
             });
