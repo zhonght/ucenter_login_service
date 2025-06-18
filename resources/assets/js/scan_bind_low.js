@@ -5,7 +5,7 @@ var codeId;
 function getLoginQrCode(key) {
     $(".id_scan_qr_code").attr('src', qrCodeLoading);
     clearInterval(timer);
-    $.post('/admin/api/scan/get_bind', {
+    $.post(bindUrl, {
         'id': key,
         '_token': csrfToken
     }, function (result) {
@@ -27,7 +27,7 @@ function getLoginQrCode(key) {
 }
 
 function getQrCodeStatus(key) {
-    $.post('/admin/api/scan/code_status', {code_id: codeId}, function (result) {
+    $.post(bindStatusUrl, {code_id: codeId}, function (result) {
         if (result['code'] == '00') {
             var status = result['data'][0];
             if (status == 0) {
@@ -69,23 +69,7 @@ function toast(msg) {
     let url = arguments[1] ? arguments[1] : "";
     var timestamp = Date.parse(new Date());
     let id = "toast_" + timestamp + "_" + get_random_str();
-    var str = '<div style="position: fixed;\n' +
-        '    background: #666666;\n' +
-        '    color: #ffffff;\n' +
-        '    text-align: center;\n' +
-        '    min-height: 1.2rem;\n' +
-        '    line-height: 1.2rem;\n' +
-        '    width: 200px;\n' +
-        '    padding: 1rem 2%;\n' +
-        '    left: 50%;\n' +
-        '    margin-left: -100px;\n' +
-        '    bottom: 20%;\n' +
-        '    font-size: .5rem;\n' +
-        '    opacity: .8;\n' +
-        '    overflow:hidden;\n' +
-        '    white-space:normal;\n' +
-        '    word-break:break-all;\n' +
-        '    border-radius: .5rem;" id="' + id + '">' + msg + '</div>';
+    var str = '<div class ="scan_toast" id="' + id + '">' + msg + '</div>';
     $("body").append(str);
     $("#" + id).fadeIn();
     setTimeout(function () {
