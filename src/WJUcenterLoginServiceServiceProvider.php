@@ -39,9 +39,14 @@ class WJUcenterLoginServiceServiceProvider extends BaseServiceProvider
 //                admin_asset("vendor/weigather/wj_ucenter_login_service/css/scan_login.css"),
                 admin_asset("vendor/weigather/wj_ucenter_login_service/css/scan_login_admin.css")
             ]);
-            Admin::script('var handleActionUrl="'.admin_url('/_handle_action_').'";');
-            Admin::script('var bindStatusUrl="'.admin_url('/api/scan/code_status').'";');
-            Admin::script('var bindUrl="'.admin_url('/api/scan/get_bind').'";');
+            Admin::html('
+            <script>
+            var handleActionUrl="'.admin_url('/_handle_action_').'";
+            var bindStatusUrl="'.admin_url('/api/scan/code_status').'";
+            var bindUrl="'.admin_url('/api/scan/get_bind').'";
+            </script>
+            ');
+            
             if (get_wj_ucenter_login_service_version() >= 2) {
                 config(['admin.auth.excepts'=>array_merge(config('admin.auth.excepts'),['auth/item_login'])]);
                 Admin::js([
