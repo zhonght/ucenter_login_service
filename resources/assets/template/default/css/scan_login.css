@@ -1,3 +1,5 @@
+
+
 .login-box-body{
 
 }
@@ -102,4 +104,29 @@
     background: url(../img/waitfor.png) no-repeat center center #fff;
     background-size: 50%;
     opacity: .95;
+}
+
+.scan_toast{
+    position: fixed;
+    background: #3b3b3b;
+    color: #ffffff;
+    text-align: center;
+    min-height: 20px;
+    line-height: 20px;
+    width:fit-content;
+    min-width:200px;
+    padding: 5px 2%;
+    left: 50%;
+    margin-left: -100px;
+    bottom: 20%;
+    font-size: 12px;
+    opacity: .6;
+    overflow:hidden;
+    white-space:normal;
+    word-break:break-all;
+    border-radius: 5px;
+}
+
+.refresh_qrcode{
+    cursor:pointer;
 }

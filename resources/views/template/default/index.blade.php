@@ -36,7 +36,7 @@
 
 <div class="login-box" id="scan-box">
     <div class="login-logo">
-        <a href="{{ admin_url('/') }}"><b>{{config('admin.name')}}234</b></a>
+        <a href="{{ admin_url('/') }}"><b>{{config('admin.name')}}</b></a>
     </div>
     <!-- ‌登录页面 -->
     <div class="login-box-body" id="account_login" style="display: none">
@@ -125,6 +125,9 @@
     var qrCodeLoading = "{{ admin_asset("vendor/weigather/wj_ucenter_login_service/template/default/img/qr_code_loading.gif")}}";
     var passwordLoginUrl = "{{ admin_url('auth/login') }}";
     var scanLoginUrl = "{{ admin_url('api/scan/get_login') }}";
+    var scanVerifyUrl = "{{ admin_url('api/scan/get_verify') }}";
+    var scanStatusUrl = "{{ admin_url('api/scan/code_status') }}";
+    var scanToLoginUrl = "{{ admin_url('auth/login') }}";
     var csrfToken = "{{ csrf_token() }}";
 
 </script>

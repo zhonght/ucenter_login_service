@@ -49,7 +49,7 @@ $(function () {
     });
 
 
-    // 密码‌登录
+    // 密码登陆
     $('.scan-password-btn').click(function () {
         passwordLogin();
     });
@@ -94,7 +94,7 @@ function getVerifyQrCode() {
         return false;
     }
     getVerifyQrCodeLock = true;
-    $.post('/admin/api/scan/get_verify', {token:verifyCodeToken}, function (result) {
+    $.post(scanVerifyUrl, {token:verifyCodeToken}, function (result) {
         if(result['code'] == '00'){
             $('#scan_verify_mark').hide();
             $('#scan_verify_time_mark').hide();
@@ -119,7 +119,7 @@ function getVerifyQrCode() {
 
 
 function getQrCodeStatus() {
-    $.post('/admin/api/scan/code_status', {code_id:codeId}, function (result) {
+    $.post(scanStatusUrl, {code_id:codeId}, function (result) {
         if(result['code'] == '00'){
             var status = result['data'][0];
             if(codeType == 'login'){
@@ -144,7 +144,7 @@ function getQrCodeStatus() {
                     clearInterval(timer);
                 }else if(status == 3){
                     clearInterval(timer);
-                    toast("‌登录成功");
+                    toast("登陆成功");
                     $('#admin_token').val(result['data'][2]);
                     $('#to_login_form').attr('action',result['data'][1]);
                     $('#to_login_form').submit();
@@ -188,7 +188,7 @@ function getQrCodeStatus() {
 var passwordLoginLock = false;
 function passwordLogin(){
     if (passwordLoginLock) {
-        toast('正在‌登录,请稍后');
+        toast('正在登陆,请稍后');
         return false;
     }
     var username = $("#password_login_username").val();
@@ -202,14 +202,14 @@ function passwordLogin(){
         return false;
     }
     passwordLoginLock = true;
-    $.post('/admin/auth/login', {
+    $.post(scanToLoginUrl, {
         username:username,
         password:password,
         _token:csrfToken,
     }, function (result) {
         if(result['code'] == '00'){
             // toast(result['msg'],result['data'][0]);
-            // 直接去‌登录
+            // 直接去登陆
             window.location.href = result['data'][0];
         }else if(result['code'] == '403'){
 
@@ -259,23 +259,7 @@ function toast(msg) {
     let url = arguments[1] ? arguments[1] : "";
     var timestamp = Date.parse(new Date());
     let id = "toast_" + timestamp + "_" + get_random_str();
-    var str = '<div style="position: fixed;\n' +
-        '    background: #666666;\n' +
-        '    color: #ffffff;\n' +
-        '    text-align: center;\n' +
-        '    min-height: 1.2rem;\n' +
-        '    line-height: 1.2rem;\n' +
-        '    width: 200px;\n' +
-        '    padding: 1rem 2%;\n' +
-        '    left: 50%;\n' +
-        '    margin-left: -100px;\n' +
-        '    bottom: 20%;\n' +
-        '    font-size: .5rem;\n' +
-        '    opacity: .8;\n' +
-        '    overflow:hidden;\n' +
-        '    white-space:normal;\n' +
-        '    word-break:break-all;\n' +
-        '    border-radius: .5rem;" id="' + id + '">' + msg + '</div>';
+    var str = '<div class ="scan_toast" id="' + id + '">' + msg + '</div>';
     $("body").append(str);
     $("#" + id).fadeIn();
     setTimeout(function () {

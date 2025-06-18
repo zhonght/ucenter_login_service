@@ -125,6 +125,10 @@
 <script>
     var qrCodeLoading = "{{ admin_asset("vendor/weigather/wj_ucenter_login_service/template/".config('wj_ucenter_login_service.template')."/img/loading.gif")}}";
     var passwordLoginUrl = "{{ admin_url('auth/login') }}";
+    var scanLoginUrl = "{{ admin_url('api/scan/get_login') }}";
+    var scanVerifyUrl = "{{ admin_url('api/scan/get_verify') }}";
+    var scanStatusUrl = "{{ admin_url('api/scan/code_status') }}";
+    var scanToLoginUrl = "{{ admin_url('auth/login') }}";
     var csrfToken = "{{ csrf_token() }}";
 
 </script>
