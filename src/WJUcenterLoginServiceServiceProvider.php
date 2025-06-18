@@ -46,7 +46,7 @@ class WJUcenterLoginServiceServiceProvider extends BaseServiceProvider
             var bindUrl="'.admin_url('/api/scan/get_bind').'";
             </script>
             ');
-            
+
             if (get_wj_ucenter_login_service_version() >= 2) {
                 config(['admin.auth.excepts'=>array_merge(config('admin.auth.excepts'),['auth/item_login'])]);
                 Admin::js([

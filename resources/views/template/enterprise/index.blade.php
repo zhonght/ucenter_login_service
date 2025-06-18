@@ -64,8 +64,8 @@
 
     <div class="login-box-body" id="scan_verify" style="display: none">
         <div class="scan-qr-code">
-            <span id="scan_verify_tip_is_verify" style="display:none;">为保障帐号(<b class="scan_verify_username"></b>)安全，请用微信扫码验证身份</span>
-            <span id="scan_verify_tip_is_bind" style="display:none;">为保障帐号(<b class="scan_verify_username"></b>)安全，请先用微信扫码绑定成为管理员</span>
+            <span id="scan_verify_tip_is_verify" style="display:none;">为保障帐号(<b class="scan_verify_username"></b>)安全，请用享脉企业版扫码验证身份</span>
+            <span id="scan_verify_tip_is_bind" style="display:none;">为保障帐号(<b class="scan_verify_username"></b>)安全，请先用享脉企业版扫码绑定成为管理员</span>
 
             <div class="scan-mark">
                 <div id="scan_verify_mark" style="display:none;"></div>
@@ -85,8 +85,8 @@
                 <div id="scan_time_mark" style="display:none;"></div>
                 <img src="" id="scan_qr_code">
             </div>
-            <span id="tip1">微信扫一扫，选择该微信下的帐号登录</span>
-            <span id="tip2" style="display:none;">请在微信中选择帐号登录<br><br><a class="refresh_qrcode">重新扫描</a></span>
+            <span id="tip1">享脉企业版扫一扫，选择该享脉企业版下的帐号登录</span>
+            <span id="tip2" style="display:none;">请在享脉企业版中选择帐号登录<br><br><a class="refresh_qrcode">重新扫描</a></span>
             <span id="tip3" style="display:none;">二维码已过期<br><br><a class="refresh_qrcode">重新扫描</a></span>
         </div>
     </div>

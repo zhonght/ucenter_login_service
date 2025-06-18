@@ -218,7 +218,7 @@ class ApiController extends Controller
 
                 return wj_ucenter_login_service_return('200', [], '检测成功');
             }
-            return wj_ucenter_login_service_return('500', [], '您不是该账户的管理员,请检查微信号是否正确');
+            return wj_ucenter_login_service_return('500', [], '您不是该账户的管理员,请检查享脉企业版账号是否正确');
         }
         return wj_ucenter_login_service_return('500', [], 'token非法');
     }
